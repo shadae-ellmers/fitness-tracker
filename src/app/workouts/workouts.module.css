@@ -1,0 +1,65 @@
+.logs {
+  padding: 20px;
+}
+
+.filterHolder {
+  padding-bottom: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: start;
+}
+
+.successMessage {
+  padding: 20px;
+  background-color: #a4d1a2;
+  margin-bottom: 20px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: center;
+}
+
+.successText {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.logItem {
+  padding: 20px;
+  background-color: white;
+  margin-bottom: 12px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: left;
+  list-style-type: none;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.logItemName {
+  font-size: 20px;
+}
+
+.logItemDate {
+  color: #8e8e8e;
+  font-size: 16px;    
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logItemStat {
+  margin-top: 5px;
+}

@@ -1,0 +1,48 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.selectField {
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.fieldSelectInput {
+  margin-left: -20px;
+  margin-top: 12px;
+}
+
+.fieldInput {
+  margin-top: 12px;
+  margin-left: -20px;
+  padding: 20px;
+  background-color: white;
+  color: #222;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  border: 0;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.submit {
+  padding: 20px;
+  background-color: white;
+  color: #222;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border: 0;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
