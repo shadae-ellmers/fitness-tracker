@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import styles from './exercises.module.css'
 import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
+import Link from 'next/link'
 
 export default auth0.withPageAuthRequired(
   async function Exercises(props: {
@@ -37,9 +38,14 @@ export default auth0.withPageAuthRequired(
           <></>
         )}
         <ul>
-          {exercises.map((exercise, index) => (
-            <li key={index} className={styles.logItem}>
-              <h3 className={styles.logItemName}>{exercise.name}</h3>
+          {exercises.map((exercise) => (
+            <li key={exercise.id} className={styles.listItem}>
+              <Link
+                href={`/exercises/${exercise.id}`}
+                className={styles.logItem}
+              >
+                <h3 className={styles.logItemName}>{exercise.name}</h3>
+              </Link>
             </li>
           ))}
         </ul>

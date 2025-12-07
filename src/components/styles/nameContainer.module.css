@@ -1,0 +1,39 @@
+.pencilIcon {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  color: #222222;
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.exerciseName {
+  padding-right: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nameContainer {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 12px;
+}
+
+.input {
+  padding: 20px;
+  background-color: white;
+  color: #222;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  border: 0;
+  font-size: 16px;
+  overflow: hidden;
+}

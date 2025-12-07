@@ -47,49 +47,6 @@ export async function getExercises(query: string = '') {
   return exercises
 }
 
-export async function getMaxWeights(userId: string, query: string = '') {
-  const exercisesWithMax = await prisma.exercise.findMany({
-    where: {
-      logs: {
-        some: { userId },
-      },
-      name: {
-        contains: query,
-        mode: 'insensitive',
-      },
-    },
-    select: {
-      id: true,
-      name: true,
-      logs: {
-        where: { userId },
-        select: {
-          weight: true,
-          sets: true,
-          reps: true,
-          created_at: true,
-        },
-        orderBy: { weight: 'desc' },
-        take: 1,
-      },
-    },
-  })
-
-  const data = exercisesWithMax.map((exercise) => {
-    const log = exercise.logs[0]
-    return {
-      exerciseId: exercise.id,
-      exerciseName: exercise.name,
-      maxWeight: log?.weight ? Number(log.weight) : null,
-      sets: log?.sets ?? null,
-      reps: log?.reps ?? null,
-      date: log?.created_at ? formatDate(log.created_at) : null,
-    }
-  })
-
-  return data
-}
-
 export async function getAllExercises() {
   const exercises = await prisma.exercise.findMany()
 
@@ -119,4 +76,90 @@ export async function getWorkouts(userId: string, query: string = '') {
     ...w,
     exerciseCount: w._count.exercises,
   }))
+}
+
+export async function getExercise(id: string, userId: string) {
+  const exerciseRaw = await prisma.exercise.findUnique({
+    where: { id: Number(id) },
+    include: {
+      logs: {
+        where: { userId },
+        orderBy: { created_at: 'desc' },
+      },
+    },
+  })
+
+  if (!exerciseRaw) return null
+
+  const logs = exerciseRaw.logs.map((log) => ({
+    ...log,
+    created_at: formatDate(log.created_at),
+    weight: Number(log.weight),
+  }))
+
+  const maxLogRaw = await prisma.log.findFirst({
+    where: {
+      exerciseId: Number(id),
+      userId,
+    },
+    orderBy: {
+      weight: 'desc',
+    },
+  })
+
+  const maxLog = maxLogRaw
+    ? {
+        ...maxLogRaw,
+        created_at: formatDate(maxLogRaw.created_at),
+        weight: Number(maxLogRaw.weight),
+      }
+    : null
+
+  return {
+    ...exerciseRaw,
+    logs,
+    maxLog,
+  }
+}
+
+export async function getWorkout(id: string, userId: string) {
+  const workoutRaw = await prisma.workout.findUnique({
+    where: {
+      userId,
+      id: Number(id),
+    },
+    include: {
+      exercises: {
+        include: {
+          logs: {
+            where: { userId },
+            orderBy: { weight: 'desc' },
+            take: 1,
+          },
+        },
+      },
+    },
+  })
+
+  if (!workoutRaw) return null
+
+  const exercises = workoutRaw.exercises.map((ex) => {
+    const log = ex.logs[0]
+
+    return {
+      ...ex,
+      personalBest: log
+        ? {
+            ...log,
+            weight: Number(log.weight),
+            created_at: formatDate(log.created_at),
+          }
+        : null,
+    }
+  })
+
+  return {
+    ...workoutRaw,
+    exercises,
+  }
 }

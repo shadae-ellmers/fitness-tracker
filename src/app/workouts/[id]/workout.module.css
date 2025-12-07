@@ -1,30 +1,58 @@
-.logs {
+.exercise {
   padding: 20px;
 }
 
-.filterHolder {
-  padding-bottom: 20px;
+.nameContainer {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: start;
+  flex-direction: row;
+  padding-bottom: 12px;
 }
 
-.successMessage {
-  padding: 20px;
-  background-color: #a4d1a2;
-  margin-bottom: 20px;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+.exerciseName {
+  padding-right: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  text-align: center;
+  justify-content: center;
 }
 
-.successText {
-  font-weight: 500;
-  font-size: 18px;
+.group {
+  padding-bottom: 20px;
+}
+
+.personalBest {
+  padding-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 12px;
+}
+
+.allArrowsIcon,
+.plusIcon {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  color: #222222;
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.plusIcon {
+  margin-right: 12px;
+}
+
+.headingText {
+  padding-bottom: 12px;
 }
 
 .listItem {
@@ -48,7 +76,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 8px;
 }
 
 .logItemName {
@@ -61,6 +88,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.stats {
+  padding-top: 8px;
 }
 
 .logItemStat {

@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import styles from './workouts.module.css'
 import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
+import Link from 'next/link'
 
 export default auth0.withPageAuthRequired(
   async function Workouts(props: {
@@ -45,14 +46,16 @@ export default auth0.withPageAuthRequired(
           <></>
         )}
         <ul>
-          {workouts.map((workout, index) => (
-            <li key={index} className={styles.logItem}>
-              <div className={styles.heading}>
-                <h3 className={styles.logItemName}>{workout.name}</h3>
-              </div>
-              <p className={styles.logItemStat}>
-                {workout.exerciseCount} {getWord(workout.exerciseCount)}
-              </p>
+          {workouts.map((workout) => (
+            <li key={workout.id} className={styles.listItem}>
+              <Link href={`/workouts/${workout.id}`} className={styles.logItem}>
+                <div className={styles.heading}>
+                  <h3 className={styles.logItemName}>{workout.name}</h3>
+                </div>
+                <p className={styles.logItemStat}>
+                  {workout.exerciseCount} {getWord(workout.exerciseCount)}
+                </p>
+              </Link>
             </li>
           ))}
         </ul>

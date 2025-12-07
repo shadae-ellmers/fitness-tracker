@@ -1,0 +1,71 @@
+.plusIcon {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  color: #222222;
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-right: 12px;
+}
+
+.allArrowsIcon {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  color: #222222;
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbarButtons {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 12px;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+}
+
+.select {
+  margin-right: 12px;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.checkIcon {
+    border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  color: #222222;
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}

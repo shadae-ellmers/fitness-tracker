@@ -1,34 +1,23 @@
-.logs {
+.exercise {
   padding: 20px;
 }
 
-.filterHolder {
+.exerciseName {
   padding-bottom: 20px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: start;
 }
 
-.successMessage {
-  padding: 20px;
-  background-color: #a4d1a2;
-  margin-bottom: 20px;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+.group {
+  padding-bottom: 20px;
+}
+
+.personalBest {
+  padding-bottom: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  text-align: center;
 }
 
-.successText {
-  font-weight: 500;
-  font-size: 18px;
-}
-
-.listItem {
-  list-style-type: none;
+.headingText {
+  padding-bottom: 12px;
 }
 
 .logItem {
@@ -42,6 +31,7 @@
   flex-direction: column;
   justify-content: start;
   text-align: left;
+  list-style-type: none;
 }
 
 .heading {
