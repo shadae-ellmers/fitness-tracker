@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import PlusIcon from './Icons/PlusIcon'
-import styles from './styles/addButton.module.css'
+import styles from './styles/actionButton.module.css'
 
 type AddButtonProps = {
   path: string

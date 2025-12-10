@@ -31,7 +31,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`${styles.nav} ${navDisplay ? styles.open : ''}`}>
+      <nav className={`${styles.nav} ${!navDisplay ? styles.closed : ''}`}>
         <div className={styles.navContent}>
           <div className={styles.navButtons}>
             <button

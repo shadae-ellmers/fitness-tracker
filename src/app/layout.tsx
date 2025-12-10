@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { Auth0Provider } from '@auth0/nextjs-auth0'
 import { auth0 } from '@/lib/auth0'

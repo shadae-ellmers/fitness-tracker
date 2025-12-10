@@ -29,18 +29,28 @@
 
 .listItem {
   list-style-type: none;
-}
-
-.logItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 20px;
   background-color: white;
   margin-bottom: 12px;
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.buttonWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: left;
 }
 

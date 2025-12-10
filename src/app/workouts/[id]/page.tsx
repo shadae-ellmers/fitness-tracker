@@ -3,9 +3,9 @@ import { auth0 } from '@/lib/auth0'
 import styles from './workout.module.css'
 import { notFound, redirect } from 'next/navigation'
 import BackLink from '@/components/BackLink'
-import AllArrowsIcon from '@/components/Icons/AllArrowsIcon'
 import NameContainer from '@/components/NameContainer'
 import WorkoutToolbar from '@/components/WorkoutToolbar'
+import DeleteButton from '@/components/DeleteButton'
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth0.getSession()
@@ -46,22 +46,33 @@ export default async function Page({ params }: { params: { id: string } }) {
           <ul>
             {workout?.exercises.map((exercise) => (
               <li key={exercise.id} className={styles.logItem}>
-                <div className={styles.heading}>
-                  <h3 className={styles.logItemName}>{exercise.name}</h3>
-                </div>
-                {exercise.personalBest ? (
-                  <div className={styles.stats}>
-                    <p className={styles.logItemStat}>
-                      Personal best:{' '}
-                      <span>{exercise.personalBest.weight}kg</span>
-                    </p>
-                    <p className={styles.logItemStat}>
-                      Date: <span>{exercise.personalBest.created_at}</span>
-                    </p>
+                <div className={styles.exerciseHolder}>
+                  <div className={styles.heading}>
+                    <h3 className={styles.logItemName}>{exercise.name}</h3>
                   </div>
-                ) : (
-                  <></>
-                )}
+                  {exercise.personalBest ? (
+                    <div className={styles.stats}>
+                      <p className={styles.logItemStat}>
+                        Personal best:{' '}
+                        <span>{exercise.personalBest.weight}kg</span>
+                      </p>
+                      <p className={styles.logItemStat}>
+                        Date: <span>{exercise.personalBest.created_at}</span>
+                      </p>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className={styles.buttonWrapper}>
+                  <DeleteButton
+                    primaryId={workout.id}
+                    secondaryId={exercise.id}
+                    action="deleteWorkoutExercise"
+                    name={exercise.name}
+                    path={`/workouts/${params.id}`}
+                  />
+                </div>
               </li>
             ))}
           </ul>

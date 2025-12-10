@@ -31,8 +31,7 @@
   margin-bottom: 12px;
 }
 
-.allArrowsIcon,
-.plusIcon {
+.closeIcon {
   border-radius: 100%;
   overflow: hidden;
   width: 50px;
@@ -45,10 +44,6 @@
   color: #222222;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.plusIcon {
-  margin-right: 12px;
 }
 
 .headingText {
@@ -67,9 +62,21 @@
   overflow: hidden;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   display: flex;
-  flex-direction: column;
-  justify-content: start;
+  flex-direction: row;
+  justify-content: space-between;
   text-align: left;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.exerciseHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .heading {
