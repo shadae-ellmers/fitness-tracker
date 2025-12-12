@@ -25,7 +25,7 @@ export default async function Logs(props: {
   return (
     <div className={styles.logs}>
       <div className={styles.filterHolder}>
-        <AddButton path="logs" />
+        <AddButton path="logs" ariaLabel="Create log" />
         <Search placeholder="Search logs..." />
       </div>
       {status === 'success' ? (

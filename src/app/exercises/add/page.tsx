@@ -14,7 +14,7 @@ export default async function AddExercisePage() {
   return (
     <div className={styles.addPage}>
       <BackLink link="/exercises" />
-      <AddExerciseForm />
+      <AddExerciseForm userId={session.user.sub} />
     </div>
   )
 }

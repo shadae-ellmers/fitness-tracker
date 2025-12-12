@@ -35,7 +35,7 @@ export default async function Workouts(props: {
   return (
     <div className={styles.logs}>
       <div className={styles.filterHolder}>
-        <AddButton path="workouts" />
+        <AddButton path="workouts" ariaLabel="Create workout" />
         <Search placeholder="Search workouts..." />
       </div>
       {status === 'success' ? (

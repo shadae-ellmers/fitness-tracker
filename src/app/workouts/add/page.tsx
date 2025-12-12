@@ -12,7 +12,7 @@ export default async function AddWorkout() {
     redirect('/auth/login')
   }
 
-  const exercises = await getAllExercises()
+  const exercises = await getAllExercises(session.user.sub)
 
   return (
     <div className={styles.addPage}>

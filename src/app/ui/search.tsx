@@ -26,6 +26,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         Search
       </label>
       <input
+        id="search"
         className={styles.searchInput}
         placeholder={placeholder}
         onChange={(e) => {

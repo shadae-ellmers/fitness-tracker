@@ -6,9 +6,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: white;
+  background-color: #fffeec;
   align-items: center;
-  color: #222222;
+  color: #222223;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-right: 12px;
@@ -22,9 +22,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: white;
+  background-color: #fffeec;
   align-items: center;
-  color: #222222;
+  color: #222223;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -63,9 +63,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: white;
+  background-color: #fffeec;
   align-items: center;
-  color: #222222;
+  color: #222223;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }

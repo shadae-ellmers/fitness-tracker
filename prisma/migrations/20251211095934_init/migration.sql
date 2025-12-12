@@ -9,6 +9,7 @@ CREATE TABLE "public"."User" (
 CREATE TABLE "public"."Exercise" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Exercise_pkey" PRIMARY KEY ("id")
 );
@@ -16,6 +17,7 @@ CREATE TABLE "public"."Exercise" (
 -- CreateTable
 CREATE TABLE "public"."Workout" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Workout_pkey" PRIMARY KEY ("id")
@@ -35,18 +37,21 @@ CREATE TABLE "public"."Log" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."_ExerciseToWorkout" (
+CREATE TABLE "public"."_WorkoutExercises" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL,
 
-    CONSTRAINT "_ExerciseToWorkout_AB_pkey" PRIMARY KEY ("A","B")
+    CONSTRAINT "_WorkoutExercises_AB_pkey" PRIMARY KEY ("A","B")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Exercise_name_key" ON "public"."Exercise"("name");
 
 -- CreateIndex
-CREATE INDEX "_ExerciseToWorkout_B_index" ON "public"."_ExerciseToWorkout"("B");
+CREATE INDEX "_WorkoutExercises_B_index" ON "public"."_WorkoutExercises"("B");
+
+-- AddForeignKey
+ALTER TABLE "public"."Exercise" ADD CONSTRAINT "Exercise_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Workout" ADD CONSTRAINT "Workout_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -58,7 +63,7 @@ ALTER TABLE "public"."Log" ADD CONSTRAINT "Log_userId_fkey" FOREIGN KEY ("userId
 ALTER TABLE "public"."Log" ADD CONSTRAINT "Log_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "public"."Exercise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."_ExerciseToWorkout" ADD CONSTRAINT "_ExerciseToWorkout_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."Exercise"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."_WorkoutExercises" ADD CONSTRAINT "_WorkoutExercises_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."Exercise"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."_ExerciseToWorkout" ADD CONSTRAINT "_ExerciseToWorkout_B_fkey" FOREIGN KEY ("B") REFERENCES "public"."Workout"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."_WorkoutExercises" ADD CONSTRAINT "_WorkoutExercises_B_fkey" FOREIGN KEY ("B") REFERENCES "public"."Workout"("id") ON DELETE CASCADE ON UPDATE CASCADE;

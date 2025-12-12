@@ -29,7 +29,7 @@
 
 .logItem {
   padding: 20px;
-  background-color: white;
+  background-color: #fffeec;
   margin-bottom: 12px;
   border-radius: 30px;
   overflow: hidden;
@@ -39,6 +39,7 @@
   justify-content: start;
   text-align: left;
   list-style-type: none;
+  color: #222223;
 }
 
 .heading {
@@ -53,7 +54,6 @@
 }
 
 .logItemDate {
-  color: #8e8e8e;
   font-size: 16px;    
   display: flex;
   flex-direction: column;

@@ -6,9 +6,10 @@ import styles from './styles/actionButton.module.css'
 
 type AddButtonProps = {
   path: string
+  ariaLabel: string
 }
 
-export default function AddButton({ path }: AddButtonProps) {
+export default function AddButton({ path, ariaLabel }: AddButtonProps) {
   const router = useRouter()
 
   const add = () => {
@@ -17,7 +18,7 @@ export default function AddButton({ path }: AddButtonProps) {
   }
 
   return (
-    <button className={styles.addButton} onClick={add}>
+    <button className={styles.addButton} onClick={add} aria-label={ariaLabel}>
       <PlusIcon />
     </button>
   )

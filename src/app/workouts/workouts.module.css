@@ -33,7 +33,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
-  background-color: white;
+  background-color: #fffeec;
   margin-bottom: 12px;
   border-radius: 30px;
   overflow: hidden;
@@ -52,6 +52,7 @@
   flex-direction: column;
   justify-content: center;
   text-align: left;
+  color: #222223;
 }
 
 .heading {
@@ -66,7 +67,6 @@
 }
 
 .logItemDate {
-  color: #8e8e8e;
   font-size: 16px;    
   display: flex;
   flex-direction: column;

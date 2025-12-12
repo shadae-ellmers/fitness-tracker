@@ -21,12 +21,12 @@ export default async function Exercises(props: {
     redirect('/auth/login')
   }
 
-  const exercises = await getExercises(query)
+  const exercises = await getExercises(session.user.sub, query)
 
   return (
     <div className={styles.logs}>
       <div className={styles.filterHolder}>
-        <AddButton path="exercises" />
+        <AddButton path="exercises" ariaLabel="Create exercise" />
         <Search placeholder="Search exercises..." />
       </div>
       {status === 'success' ? (

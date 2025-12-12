@@ -25,8 +25,8 @@
   margin-top: 12px;
   margin-left: -20px;
   padding: 20px;
-  background-color: white;
-  color: #222;
+  background-color: #fffeec;
+  color: #222223;
   border-radius: 30px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   text-align: left;
@@ -37,8 +37,8 @@
 
 .submit {
   padding: 20px;
-  background-color: white;
-  color: #222;
+  background-color: #fffeec;
+  color: #222223;
   border-radius: 30px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   text-align: center;

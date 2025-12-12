@@ -12,6 +12,7 @@ interface AddLogInput {
 }
 
 interface AddExerciseInput {
+  userId: string
   name: string
 }
 
@@ -40,6 +41,7 @@ export async function addExercise(input: AddExerciseInput) {
   try {
     return await prisma.exercise.create({
       data: {
+        userId: input.userId,
         name: input.name,
       },
     })

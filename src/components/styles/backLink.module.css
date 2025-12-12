@@ -6,13 +6,13 @@
 }
 
 .backIcon {
-  fill: #222222;
+  fill: #fffeec;
   display: flex;
 }
 
 .backText {
   font-size: 16px;
-  color: #222222;
+  color: #fffeec;
   height: 100%;
   display: flex;
   flex-direction: column;

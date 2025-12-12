@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     notFound()
   }
 
-  const exercises = await getAllExercises()
+  const exercises = await getAllExercises(session.user.sub)
 
   return (
     <div className={styles.exercise}>

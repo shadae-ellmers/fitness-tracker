@@ -5,7 +5,11 @@ import styles from './styles/addForm.module.css'
 import { addExercise } from '@/app/actions/create'
 import { useRouter } from 'next/navigation'
 
-export default function AddExerciseForm() {
+type AddExerciseProps = {
+  userId: string
+}
+
+export default function AddExerciseForm({ userId }: AddExerciseProps) {
   const router = useRouter()
 
   const [formData, setFormData] = useState({
@@ -24,6 +28,7 @@ export default function AddExerciseForm() {
     e.preventDefault()
     try {
       await addExercise({
+        userId: userId,
         name: String(formData.name),
       })
 
