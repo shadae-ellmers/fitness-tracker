@@ -4,7 +4,6 @@ import { useState } from 'react'
 import HamburgerIcon from './Icons/HamburgerIcon'
 import styles from './styles/navigation.module.css'
 import CloseIcon from './Icons/CloseIcon'
-import BellIcon from './Icons/BellIcon'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -34,13 +33,6 @@ export default function Navigation() {
       <nav className={`${styles.nav} ${!navDisplay ? styles.closed : ''}`}>
         <div className={styles.navContent}>
           <div className={styles.navButtons}>
-            <button
-              className={styles.bellIcon}
-              aria-label="Go to notifications"
-              onClick={() => goToPage('notifications')}
-            >
-              <BellIcon />
-            </button>
             <button
               className={styles.closeIcon}
               onClick={toggleNav}

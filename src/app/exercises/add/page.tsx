@@ -1,20 +1,20 @@
 import BackLink from '@/components/BackLink'
 import styles from './addPage.module.css'
-import { auth0 } from '@/lib/auth0'
 import { redirect } from 'next/navigation'
 import AddExerciseForm from '@/components/AddExerciseForm'
+import getUser from '@/app/helpers/auth'
 
 export default async function AddExercisePage() {
-  const session = await auth0.getSession()
+  const user = await getUser()
 
-  if (!session?.user) {
+  if (!user) {
     redirect('/auth/login')
   }
 
   return (
     <div className={styles.addPage}>
       <BackLink link="/exercises" />
-      <AddExerciseForm userId={session.user.sub} />
+      <AddExerciseForm userId={user.sub} />
     </div>
   )
 }

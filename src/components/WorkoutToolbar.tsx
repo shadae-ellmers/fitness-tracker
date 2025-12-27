@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Select, { MultiValue } from 'react-select'
 import PlusIcon from './Icons/PlusIcon'
-import AllArrowsIcon from './Icons/AllArrowsIcon'
 import CheckIcon from './Icons/CheckIcon'
 import styles from './styles/workoutToolbar.module.css'
 import { updateWorkoutExercises } from '@/app/actions/update'
@@ -17,6 +16,7 @@ type WorkoutToolbarProps = {
   workoutId: number
   userId: string
   exercises: Exercise[]
+  exerciseCount: number
 }
 
 export default function WorkoutToolbar({
@@ -42,6 +42,7 @@ export default function WorkoutToolbar({
     } catch (err) {
       console.error(err)
     } finally {
+      setSelectedExercises([])
       setIsSaving(false)
     }
   }
@@ -55,9 +56,6 @@ export default function WorkoutToolbar({
           aria-label="Add exercises to workout"
         >
           <PlusIcon />
-        </button>
-        <button className={styles.allArrowsIcon}>
-          <AllArrowsIcon />
         </button>
       </div>
 
@@ -92,9 +90,9 @@ export default function WorkoutToolbar({
                   ...baseStyles,
                   borderRadius: '30px',
                   overflow: 'hidden',
-                  backgroundColor: '#fffeec',
-                  color: '#222223',
-                  border: '0',
+                  backgroundColor: '#faf4e4',
+                  color: '#19160f',
+                  border: '2px solid #19160f',
                 }),
                 indicatorSeparator: (baseStyles) => ({
                   ...baseStyles,
@@ -102,8 +100,8 @@ export default function WorkoutToolbar({
                 }),
                 menu: (baseStyles) => ({
                   ...baseStyles,
-                  backgroundColor: '#fffeec',
-                  color: '#222223',
+                  backgroundColor: '#faf4e4',
+                  color: '#19160f',
                 }),
               }}
             />
@@ -114,6 +112,7 @@ export default function WorkoutToolbar({
               type="submit"
               className={styles.checkIcon}
               disabled={isSaving}
+              aria-label="Save"
             >
               <CheckIcon />
             </button>

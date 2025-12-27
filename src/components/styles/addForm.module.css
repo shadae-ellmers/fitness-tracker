@@ -24,21 +24,21 @@
 .fieldInput {
   margin-top: 12px;
   margin-left: -20px;
-  padding: 20px;
-  background-color: #fffeec;
-  color: #222223;
+  padding: 15px 20px;
+  background-color: #faf4e4;
+  color: #19160f;
   border-radius: 30px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   text-align: left;
-  border: 0;
+  border: 2px solid #19160f;
   font-size: 16px;
   overflow: hidden;
 }
 
 .submit {
   padding: 20px;
-  background-color: #fffeec;
-  color: #222223;
+  background-color: #19160f;
+  color: #faf4e4;
   border-radius: 30px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   text-align: center;

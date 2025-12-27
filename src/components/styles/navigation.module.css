@@ -1,15 +1,23 @@
 .nav {
   position: absolute;
-  width: 80%;
+  width: 100%;
   height: 100%;
-  background-color: #222223;
+  background-color: #faf4e4;
   top: 0;
   right: 0;
+  max-width: 460px;
   padding: 20px;
   transition: transform 0.3s ease-out;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.06);
-  color: #222223;
+  color: #19160f;
   z-index: 1;
+}
+
+@media (min-width: 460px) {
+  .nav {
+    right: unset;
+    margin-left: -20px;
+  }
 }
 
 .closed {
@@ -29,8 +37,7 @@
 }
 
 .navIcon,
-.closeIcon,
-.bellIcon {
+.closeIcon {
   border-radius: 100%;
   overflow: hidden;
   width: 50px;
@@ -38,15 +45,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #fffeec;
+  background-color: #19160f;
   align-items: center;
-  color: #222223;
+  color: #faf4e4;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.bellIcon {
-  margin-right: 12px;
 }
 
 .links {
@@ -58,7 +61,8 @@
 .linkWrapper {
   list-style: none;
   border-radius: 30px;
-  background-color: #fffeec;
+  background-color: #19160f;
+  color: #faf4e4;
   margin-bottom: 12px;
   overflow: hidden;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);

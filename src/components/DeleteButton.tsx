@@ -1,14 +1,19 @@
 'use client'
 
-import { deleteWorkout, deleteWorkoutExercise } from '@/app/actions/delete'
-import CloseIcon from './Icons/CloseIcon'
+import {
+  deleteExercise,
+  deleteLog,
+  deleteWorkout,
+  deleteWorkoutExercise,
+} from '@/app/actions/delete'
 import styles from './styles/actionButton.module.css'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import TrashIcon from './Icons/TrashIcon'
 
 type DeleteButtonProps = {
   primaryId: number
-  secondaryId?: number
+  secondaryId?: number | undefined
   action: string
   name: string
   path: string
@@ -24,14 +29,21 @@ export default function DeleteButton({
   const [showDialog, setShowDialog] = useState(false)
   const router = useRouter()
 
-  const deleteItem = async () => {
+  const deleteItem = async (e: React.FormEvent) => {
+    e.preventDefault()
+
     try {
-      if (action === 'deleteWorkoutExercise') {
-        await deleteWorkoutExercise(primaryId, secondaryId)
-      } else if (action === 'deleteWorkout') {
+      if (action === 'workoutExercise' && secondaryId) {
+        await deleteWorkoutExercise(secondaryId, primaryId)
+      } else if (action === 'workouts') {
         await deleteWorkout(primaryId)
+      } else if (action === 'exercises') {
+        await deleteExercise(primaryId)
+      } else if (action === 'logs') {
+        await deleteLog(primaryId)
       }
       router.push(path)
+      setShowDialog(false)
     } catch (err) {
       console.error(err)
     }
@@ -42,8 +54,9 @@ export default function DeleteButton({
       <button
         className={styles.deleteButton}
         onClick={() => setShowDialog(true)}
+        aria-label={`Delete ${name}`}
       >
-        <CloseIcon />
+        <TrashIcon />
       </button>
       {showDialog && (
         <div className={styles.overlay}>
@@ -52,12 +65,12 @@ export default function DeleteButton({
             <div className={styles.buttonWrapper}>
               <button
                 onClick={() => setShowDialog(false)}
-                className={styles.dialogButton}
+                className={styles.cancel}
               >
                 Cancel
               </button>
-              <button onClick={deleteItem} className={styles.dialogButton}>
-                Yes
+              <button onClick={deleteItem} className={styles.submit}>
+                Delete
               </button>
             </div>
           </div>

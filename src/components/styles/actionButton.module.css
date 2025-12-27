@@ -8,9 +8,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #fffeec;
+  background-color: #19160f;
   align-items: center;
-  color: #222223;
+  color: #faf4e4;
+  fill: #faf4e4;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -30,7 +31,7 @@
 }
 
 .modal {
-  background: #fffeec;
+  background: #faf4e4;
   padding: 20px;
   margin: 20px;
   border-radius: 30px;
@@ -40,16 +41,83 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 12px;
+  padding-top: 20px;
 }
 
 .dialogButton {
   padding: 12px;
-  color: #222223;
-  background-color: #fffeec;
+  color: #faf4e4;
+  background-color: #19160f;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   border-radius: 30px;
   font-size: 16px;
   font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.selectField {
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.fieldSelectInput {
+  margin-left: -20px;
+  margin-top: 12px;
+}
+
+.fieldInput {
+  margin-top: 12px;
+  margin-left: -20px;
+  padding: 15px 20px;
+  background-color: #faf4e4;
+  color: #19160f;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  border: 2px solid #19160f;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.submit {
+  padding: 20px;
+  background-color: #19160f;
+  color: #faf4e4;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border: 0;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.cancel {
+  padding: 20px;
+  background-color: #faf4e4;
+  color: #19160f;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border: 2px solid #19160f;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

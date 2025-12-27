@@ -8,11 +8,17 @@
 
 .searchInput {
   height: 100%;
-  background-color: #fffeec;
-  color: #222223;
+  background-color: #faf4e4;
+  color: #19160f;
   border-radius: 30px;
-  border: 0;
+  border: 2px solid #19160f;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   padding: 15px 20px;
   font-size: 16px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.searchInput::placeholder {
+  color: #19160f;
 }

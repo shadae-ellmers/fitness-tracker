@@ -1,18 +1,21 @@
 :root {
-  --background: #222223;
-  --foreground: #fffeec;
+  --background: #faf4e4;
+  --foreground: #19160f;
 }
 
 @theme {
-  --color-brandBlack: #222223;
-  --color-brandWhite: #fffeec;
-  --color-brandGreen: #cac426;
+  --color-brandBlack: #19160f;
+  --color-brandWhite: #faf4e4;
+  --color-brandGreen: #9da862;
+  --color-brandPink: #f5b8da;
+  --color-brandBlue: #b6caeb;
+  --color-brandYellow: #f6d868;
 }
 
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #f6f6f6;
-    --foreground: #222223;
+    --foreground: #19160f;
   }
 } */
 
@@ -21,8 +24,12 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   height: 100%;
-  background-color: #222223;
-  color: #fffeec;
+  background-color: #19160f;
+  color: #faf4e4;
+}
+
+html {
+  background-color: #faf4e4;
 }
 
 body {
@@ -31,6 +38,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* max-width: 460px; */
 }
 
 * {

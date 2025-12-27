@@ -5,6 +5,7 @@ import styles from './styles/addForm.module.css'
 import { addLog } from '@/app/actions/create'
 import { useUser } from '@auth0/nextjs-auth0'
 import { useRouter } from 'next/navigation'
+import Select from 'react-select'
 
 type AddLogFormProps = {
   exercises: Exercise[]
@@ -13,6 +14,11 @@ type AddLogFormProps = {
 type Exercise = {
   id: number
   name: string
+}
+
+type SelectOption = {
+  value: number
+  label: string
 }
 
 export default function AddLogForm({ exercises }: AddLogFormProps) {
@@ -28,6 +34,10 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
   })
 
   const [formSubmitState, setFormSubmitState] = useState(String || null)
+
+  const [selectedExercise, setSelectedExercise] = useState<SelectOption | null>(
+    null
+  )
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -62,22 +72,43 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
       <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Exercise
-          <select
-            required
-            className={styles.fieldInput}
-            name="exerciseId"
-            value={formData.exerciseId}
-            onChange={handleChange}
-          >
-            <option value="" disabled>
-              Select an exercise
-            </option>
-            {exercises.map((exercise) => (
-              <option key={exercise.id} value={exercise.id}>
-                {exercise.name}
-              </option>
-            ))}
-          </select>
+          <Select
+            isMulti={false}
+            options={exercises.map((ex) => ({ value: ex.id, label: ex.name }))}
+            value={selectedExercise}
+            onChange={(selected) => {
+              setSelectedExercise(selected)
+              setFormData((prev) => ({
+                ...prev,
+                exerciseId: selected?.value.toString() ?? '',
+              }))
+            }}
+            placeholder="Search and select exercises..."
+            className={styles.fieldSelectInput}
+            styles={{
+              valueContainer: (baseStyles) => ({
+                ...baseStyles,
+                padding: '20px',
+              }),
+              control: (baseStyles) => ({
+                ...baseStyles,
+                borderRadius: '30px',
+                overflow: 'hidden',
+                backgroundColor: '#faf4e4',
+                color: '#19160f',
+                border: '2px solid #19160f',
+              }),
+              indicatorSeparator: (baseStyles) => ({
+                ...baseStyles,
+                display: 'none',
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: '#faf4e4',
+                color: '#19160f',
+              }),
+            }}
+          />
         </label>
         <label className={styles.field}>
           Weight (kg)

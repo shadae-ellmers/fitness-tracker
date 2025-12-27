@@ -1,9 +1,10 @@
 import { getLogs } from '../actions/read'
-import { auth0 } from '@/lib/auth0'
 import { redirect } from 'next/navigation'
 import styles from './logs.module.css'
 import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
+import DataCard from '@/components/DataCard'
+import getUser from '../helpers/auth'
 
 export default async function Logs(props: {
   searchParams?: Promise<{
@@ -14,13 +15,14 @@ export default async function Logs(props: {
   const searchParams = await props.searchParams
   const query = searchParams?.query || ''
   const status = searchParams?.status || ''
-  const session = await auth0.getSession()
 
-  if (!session?.user) {
+  const user = await getUser()
+
+  if (!user) {
     redirect('/auth/login')
   }
 
-  const logs = await getLogs(session.user.sub, query)
+  const logs = await getLogs(user.sub, query)
 
   return (
     <div className={styles.logs}>
@@ -35,25 +37,18 @@ export default async function Logs(props: {
       ) : (
         <></>
       )}
-      <ul>
-        {logs.map((log, index) => (
-          <li key={index} className={styles.logItem}>
-            <div className={styles.heading}>
-              <h3 className={styles.logItemName}>{log.exercise.name}</h3>
-              <h4 className={styles.logItemDate}>{log.created_at}</h4>
-            </div>
-            <p className={styles.logItemStat}>
-              Weight: <span>{log.weight}kg</span>
-            </p>
-            <p className={styles.logItemStat}>
-              Reps: <span>{log.reps}</span>
-            </p>
-            <p className={styles.logItemStat}>
-              Sets: <span>{log.sets}</span>
-            </p>
-          </li>
-        ))}
-      </ul>
+      {!logs.length && (
+        <p className={styles.successText}>
+          No results found for &quot;{query}&quot;
+        </p>
+      )}
+      {logs.length >= 1 && (
+        <ul>
+          {logs.map((log, index) => (
+            <DataCard data={log} key={index} index={index} type="logs" />
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

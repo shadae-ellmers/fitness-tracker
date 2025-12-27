@@ -1,10 +1,10 @@
 import { getExercises } from '../actions/read'
-import { auth0 } from '@/lib/auth0'
 import { redirect } from 'next/navigation'
 import styles from './exercises.module.css'
 import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
-import Link from 'next/link'
+import DataCard from '@/components/DataCard'
+import getUser from '../helpers/auth'
 
 export default async function Exercises(props: {
   searchParams?: Promise<{
@@ -15,13 +15,14 @@ export default async function Exercises(props: {
   const searchParams = await props.searchParams
   const query = searchParams?.query || ''
   const status = searchParams?.status || ''
-  const session = await auth0.getSession()
 
-  if (!session?.user) {
+  const user = await getUser()
+
+  if (!user) {
     redirect('/auth/login')
   }
 
-  const exercises = await getExercises(session.user.sub, query)
+  const exercises = await getExercises(user.sub, query)
 
   return (
     <div className={styles.logs}>
@@ -37,12 +38,13 @@ export default async function Exercises(props: {
         <></>
       )}
       <ul>
-        {exercises.map((exercise) => (
-          <li key={exercise.id} className={styles.listItem}>
-            <Link href={`/exercises/${exercise.id}`} className={styles.logItem}>
-              <h3 className={styles.logItemName}>{exercise.name}</h3>
-            </Link>
-          </li>
+        {exercises.map((exercise, index) => (
+          <DataCard
+            data={exercise}
+            index={index}
+            key={index}
+            type="exercises"
+          />
         ))}
       </ul>
     </div>

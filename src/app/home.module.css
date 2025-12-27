@@ -1,35 +1,21 @@
 .homePage {
   padding: 20px;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .progress {
-  background-color: #cac426;
-  color: #222223;
+  background-color: #f6d868;
+  color: #19160f;
   padding: 20px;
   border-radius: 30px;
   margin: 20px 0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 }
 
 .weekchange {
   margin-bottom: 20px;
-}
-
-.heatmap {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  width: 100%;
-  background-color: #cac426;
-  color: #222223;
-  padding: 20px;
-  border-radius: 30px;
-  margin: 20px 0;
-}
-
-.square {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
 }
 
 .stat {

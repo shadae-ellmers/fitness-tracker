@@ -23,9 +23,12 @@ export async function getLogs(userId: string, query: string = '') {
   })
 
   const logs = logsRaw.map((log) => ({
-    ...log,
+    title: log.exercise.name,
+    id: log.id,
     created_at: formatDate(log.created_at),
     weight: Number(log.weight),
+    reps: log.reps,
+    sets: log.sets,
   }))
 
   return logs
@@ -45,7 +48,12 @@ export async function getExercises(userId: string, query: string = '') {
     },
   })
 
-  return exercises
+  const exercisesMap = exercises.map((exercise) => ({
+    id: exercise.id,
+    title: exercise.name,
+  }))
+
+  return exercisesMap
 }
 
 export async function getAllExercises(userId: string) {
@@ -56,6 +64,25 @@ export async function getAllExercises(userId: string) {
   })
 
   return exercises
+}
+
+export async function getAllExercisesExcludingExisting(
+  userId: string,
+  workoutId: number
+) {
+  return prisma.exercise.findMany({
+    where: {
+      userId,
+      workouts: {
+        none: {
+          id: workoutId,
+        },
+      },
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  })
 }
 
 export async function getWorkouts(userId: string, query: string = '') {
@@ -77,9 +104,10 @@ export async function getWorkouts(userId: string, query: string = '') {
     },
   })
 
-  return workouts.map((w) => ({
-    ...w,
-    exerciseCount: w._count.exercises,
+  return workouts.map((workout) => ({
+    title: workout.name,
+    id: workout.id,
+    exerciseCount: workout._count.exercises,
   }))
 }
 
@@ -97,9 +125,11 @@ export async function getExercise(id: string, userId: string) {
   if (!exerciseRaw) return null
 
   const logs = exerciseRaw.logs.map((log) => ({
-    ...log,
+    title: exerciseRaw.name,
     created_at: formatDate(log.created_at),
     weight: Number(log.weight),
+    reps: log.reps,
+    sets: log.sets,
   }))
 
   const maxLogRaw = await prisma.log.findFirst({
@@ -148,19 +178,24 @@ export async function getWorkout(id: string, userId: string) {
 
   if (!workoutRaw) return null
 
-  const exercises = workoutRaw.exercises.map((ex) => {
-    const log = ex.logs[0]
+  const exercises = workoutRaw.exercises.map((exercise) => {
+    const log = exercise.logs[0]
 
-    return {
-      ...ex,
-      personalBest: log
-        ? {
-            ...log,
-            weight: Number(log.weight),
-            created_at: formatDate(log.created_at),
-          }
-        : null,
-    }
+    return log
+      ? {
+          id: exercise.id,
+          secondaryId: workoutRaw.id,
+          title: exercise.name,
+          created_at: formatDate(log.created_at),
+          weight: Number(log.weight),
+          reps: log.reps,
+          sets: log.sets,
+        }
+      : {
+          title: exercise.name,
+          id: exercise.id,
+          secondaryId: workoutRaw.id,
+        }
   })
 
   return {
@@ -170,40 +205,42 @@ export async function getWorkout(id: string, userId: string) {
 }
 
 export async function getProgress(userId: string) {
-  const raw = await prisma.log.groupBy({
-    by: ['created_at'],
+  const raw = await prisma.log.findMany({
     where: {
       userId,
     },
-    _sum: {
+    select: {
+      created_at: true,
       sets: true,
       reps: true,
       weight: true,
     },
   })
 
-  const daily = raw.map((d) => {
-    const sets = d._sum.sets ?? 0
-    const reps = d._sum.reps ?? 0
-    const weight = Number(d._sum.weight ?? 0)
+  const dailyMap: Record<string, number> = {}
 
-    return {
-      date: d.created_at.toISOString().split('T')[0],
-      volume: sets * reps * weight,
+  raw.forEach((log) => {
+    const date = log.created_at.toISOString().split('T')[0]
+    const volume = (log.sets ?? 0) * (log.reps ?? 0) * (Number(log.weight) ?? 0)
+
+    if (!dailyMap[date]) {
+      dailyMap[date] = 0
     }
+    dailyMap[date] += volume
   })
 
-  daily.sort((a, b) => a.date.localeCompare(b.date))
+  const daily = Object.entries(dailyMap)
+    .map(([date, volume]) => ({ date, volume }))
+    .sort((a, b) => a.date.localeCompare(b.date))
 
-  // ✅ baseline = first day
   const baseline = daily.length > 0 ? daily[0].volume : 0
 
-  const percent = daily.map((d) => ({
+  return daily.map((d) => ({
     date: d.date,
-    percent: baseline === 0 ? 0 : ((d.volume - baseline) / baseline) * 100,
+    volume: d.volume,
+    percentChange:
+      baseline === 0 ? 0 : ((d.volume - baseline) / baseline) * 100,
   }))
-
-  return percent
 }
 
 export async function getProgressLastMonth(userId: string) {
@@ -211,91 +248,43 @@ export async function getProgressLastMonth(userId: string) {
   const thirtyDaysAgo = new Date()
   thirtyDaysAgo.setDate(today.getDate() - 30)
 
-  const raw = await prisma.log.groupBy({
-    by: ['created_at'],
+  const raw = await prisma.log.findMany({
     where: {
       userId,
       created_at: {
         gte: thirtyDaysAgo,
       },
     },
-    _sum: {
+    select: {
+      created_at: true,
       sets: true,
       reps: true,
       weight: true,
     },
   })
 
-  const daily = raw.map((d) => {
-    const sets = d._sum.sets ?? 0
-    const reps = d._sum.reps ?? 0
-    const weight = Number(d._sum.weight ?? 0)
+  const dailyMap: Record<string, number> = {}
 
-    return {
-      date: d.created_at.toISOString().split('T')[0],
-      volume: sets * reps * weight,
+  raw.forEach((log) => {
+    const date = log.created_at.toISOString().split('T')[0]
+    const volume = (log.sets ?? 0) * (log.reps ?? 0) * (Number(log.weight) ?? 0)
+
+    if (!dailyMap[date]) {
+      dailyMap[date] = 0
     }
+    dailyMap[date] += volume
   })
 
-  daily.sort((a, b) => a.date.localeCompare(b.date))
+  const daily = Object.entries(dailyMap)
+    .map(([date, volume]) => ({ date, volume }))
+    .sort((a, b) => a.date.localeCompare(b.date))
 
   const baseline = daily.length > 0 ? daily[0].volume : 0
 
   return daily.map((d) => ({
     date: d.date,
-    percent: baseline === 0 ? 0 : ((d.volume - baseline) / baseline) * 100,
+    volume: d.volume,
+    percentChange:
+      baseline === 0 ? 0 : ((d.volume - baseline) / baseline) * 100,
   }))
-}
-
-export async function getHeatmapData(userId: string) {
-  const today = new Date()
-  const start = new Date()
-  start.setDate(today.getDate() - 29).toLocaleString('en-NZ')
-
-  // Fetch real log data
-  const logs = await prisma.log.groupBy({
-    by: ['created_at'],
-    where: {
-      userId,
-      created_at: {
-        gte: start,
-      },
-    },
-    _count: { id: true },
-  })
-
-  // Convert DB results to map for fast lookup
-  const logMap = new Map<string, number>()
-  logs.forEach((l) => {
-    const localKey = l.created_at.toLocaleDateString('en-NZ')
-    logMap.set(localKey, l._count.id)
-  })
-
-  // Build exactly 30 days aligned Mon → Sun
-  // Build 30 days of real data
-  const realDays: { date: string | null; count: number | null }[] = []
-
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(start)
-    d.setDate(start.getDate() + i)
-
-    const key = d.toLocaleDateString('en-NZ')
-
-    if (d > today) {
-      realDays.push({ date: null, count: null }) // future = grey
-    } else {
-      realDays.push({ date: key, count: logMap.get(key) ?? 0 })
-    }
-  }
-
-  // Find weekday index of the first day (0 = Monday)
-  const weekday = (start.getDay() + 6) % 7
-
-  // Pad the beginning so the first column starts on Monday
-  const paddedDays = [
-    ...Array(weekday).fill({ date: null, count: null }),
-    ...realDays,
-  ]
-
-  return paddedDays
 }

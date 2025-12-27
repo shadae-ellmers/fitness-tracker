@@ -95,9 +95,9 @@ export default function AddWorkoutForm({ exercises }: AddWorkoutFormProps) {
                 ...baseStyles,
                 borderRadius: '30px',
                 overflow: 'hidden',
-                backgroundColor: '#fffeec',
-                color: '#222223',
-                border: '0',
+                backgroundColor: '#faf4e4',
+                color: '#19160f',
+                border: '2px solid #19160f',
               }),
               indicatorSeparator: (baseStyles) => ({
                 ...baseStyles,
@@ -105,8 +105,8 @@ export default function AddWorkoutForm({ exercises }: AddWorkoutFormProps) {
               }),
               menu: (baseStyles) => ({
                 ...baseStyles,
-                backgroundColor: '#fffeec',
-                color: '#222223',
+                backgroundColor: '#faf4e4',
+                color: '#19160f',
               }),
             }}
           />

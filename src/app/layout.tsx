@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Auth0Provider } from '@auth0/nextjs-auth0'
-import { auth0 } from '@/lib/auth0'
 import { findOrCreateUser } from './actions/auth'
 import Header from '@/components/Header'
+import getUser from './helpers/auth'
 
 export const metadata: Metadata = {
   title: 'Fitness Tracker',
@@ -15,10 +15,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const session = await auth0.getSession()
+  const user = await getUser()
 
-  if (session?.user) {
-    await findOrCreateUser({ user: session.user })
+  if (user) {
+    await findOrCreateUser({ user: user })
   }
 
   return (

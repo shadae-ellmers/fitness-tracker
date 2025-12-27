@@ -1,20 +1,24 @@
 'use client'
 
-import { updateWorkoutName } from '@/app/actions/update'
+import { updateExerciseName, updateWorkoutName } from '@/app/actions/update'
 import PencilIcon from './Icons/PencilIcon'
 import styles from './styles/nameContainer.module.css'
 import { useRef, useState } from 'react'
+import CheckIcon from './Icons/CheckIcon'
+import CloseIcon from './Icons/CloseIcon'
 
 type NameContainerProps = {
   name: string
-  workoutId: number
+  primaryId: number
   userId: string
+  type: string
 }
 
 export default function NameContainer({
   name,
-  workoutId,
+  primaryId,
   userId,
+  type,
 }: NameContainerProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(name)
@@ -31,26 +35,54 @@ export default function NameContainer({
 
     if (value.trim() === '' || value === name) return
 
-    await updateWorkoutName(workoutId, value, userId)
+    if (type === 'workout') {
+      await updateWorkoutName(primaryId, value, userId)
+    } else if (type === 'exercise') {
+      await updateExerciseName(primaryId, value, userId)
+    }
+  }
+
+  const handleCancel = () => {
+    setIsEditing(false)
+    setValue(name)
   }
 
   return (
     <div className={styles.nameContainer}>
       {isEditing ? (
-        <>
+        <form className={styles.form} onSubmit={saveName}>
           <input
             ref={inputRef}
             className={styles.input}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            onBlur={saveName}
-            onKeyDown={(e) => e.key === 'Enter' && saveName()}
           />
-        </>
+          <button
+            type="submit"
+            className={styles.checkIcon}
+            disabled={!isEditing}
+            aria-label="Save"
+          >
+            <CheckIcon />
+          </button>
+          <button
+            type="button"
+            className={styles.checkIcon}
+            disabled={!isEditing}
+            aria-label="Cancel"
+            onClick={handleCancel}
+          >
+            <CloseIcon />
+          </button>
+        </form>
       ) : (
         <>
           <h1 className={styles.exerciseName}>{value}</h1>
-          <button className={styles.pencilIcon} onClick={startEditing}>
+          <button
+            className={styles.pencilIcon}
+            onClick={startEditing}
+            aria-label="Edit title"
+          >
             <PencilIcon />
           </button>
         </>

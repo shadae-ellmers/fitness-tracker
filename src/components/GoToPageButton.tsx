@@ -6,9 +6,10 @@ import styles from './styles/actionButton.module.css'
 
 type GoToPageButtonProps = {
   path: string
+  name: string
 }
 
-export default function GoToPageButton({ path }: GoToPageButtonProps) {
+export default function GoToPageButton({ path, name }: GoToPageButtonProps) {
   const router = useRouter()
 
   const handleClick = () => {
@@ -16,7 +17,11 @@ export default function GoToPageButton({ path }: GoToPageButtonProps) {
   }
 
   return (
-    <button className={styles.pageButton} onClick={handleClick}>
+    <button
+      className={styles.pageButton}
+      onClick={handleClick}
+      aria-label={`Go to ${name} page`}
+    >
       <ArrowRightIcon />
     </button>
   )

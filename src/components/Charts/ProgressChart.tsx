@@ -13,32 +13,33 @@ import styles from '../styles/charts.module.css'
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement)
 
 interface Props {
-  data: { date: string; percent: number }[]
+  data: { date: string; volume: number; percentChange: number }[]
+  dateRange?: string | null
 }
 
-export default function ProgressChart({ data }: Props) {
+export default function ProgressChart({ data, dateRange = null }: Props) {
   if (!data || data.length === 0) {
     return <p className={styles.text}>No progress data available yet.</p>
   }
 
-  const overall = data.length > 0 ? data[data.length - 1].percent : 0
-
-  const formatted = (overall > 0 ? '+' : '') + overall.toFixed(1)
+  const latestPercent = data[data.length - 1].percentChange
+  const formatted = (latestPercent > 0 ? '+' : '') + latestPercent.toFixed(1)
 
   const labels = data.map((d) => d.date)
-  const values = data.map((d) => d.percent)
+  const values = data.map((d) => d.volume)
 
   const chartData = {
     labels,
     datasets: [
       {
-        label: 'Percentage',
+        label: 'Volume',
         data: values,
-        borderColor: '#222223',
+        borderColor: '#19160f',
         backgroundColor: 'transparent',
-        pointBackgroundColor: '#222223',
+        pointBackgroundColor: '#19160f',
         pointRadius: 3,
         fill: false,
+        tension: 0.4,
       },
     ],
   }
@@ -61,18 +62,17 @@ export default function ProgressChart({ data }: Props) {
         },
         ticks: {
           callback: (value: string | number, index: number) => {
+            if (index !== 0 && index !== labels.length - 1) {
+              return ''
+            }
+
             const raw = labels[index]
-
             const date = new Date(raw)
-
             const d = String(date.getDate()).padStart(2, '0')
             const m = String(date.getMonth() + 1).padStart(2, '0')
             const y = String(date.getFullYear()).slice(-2)
-
             return `${d}/${m}/${y}`
           },
-          maxRotation: 45,
-          minRotation: 45,
           color: '#222223',
         },
       },
@@ -90,7 +90,7 @@ export default function ProgressChart({ data }: Props) {
           color: '#222223',
         },
         ticks: {
-          callback: (value: string | number) => `${value}%`,
+          callback: (value: string | number) => `${value}`,
           color: '#222223',
         },
       },
@@ -99,9 +99,18 @@ export default function ProgressChart({ data }: Props) {
 
   return (
     <div>
-      <p className={styles.text}>
-        You&apos;ve had a <strong>{formatted}%</strong> change.
-      </p>
+      {dateRange === 'month' && (
+        <p className={styles.text}>
+          You&apos;ve had a <strong>{formatted}%</strong> change in volume over
+          the last 30 days.
+        </p>
+      )}
+      {!dateRange && (
+        <p className={styles.text}>
+          You&apos;ve had a <strong>{formatted}%</strong> change in volume
+          overall.
+        </p>
+      )}
       <Line data={chartData} options={options} />
     </div>
   )
