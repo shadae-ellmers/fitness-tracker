@@ -2,9 +2,13 @@
 
 import prisma from '../../../prisma/prisma'
 import { formatDate } from '../helpers/strings'
+import { Prisma } from '@prisma/client'
+
+type LogWithExercise = Prisma.LogGetPayload<{ include: { exercise: true } }>
+type ExerciseWithLogs = Prisma.ExerciseGetPayload<{ include: { logs: true } }>
 
 export async function getLogs(userId: string, query: string = '') {
-  const logsRaw = await prisma.log.findMany({
+  const logsRaw: LogWithExercise[] = await prisma.log.findMany({
     where: {
       userId,
       exercise: {
@@ -112,15 +116,17 @@ export async function getWorkouts(userId: string, query: string = '') {
 }
 
 export async function getExercise(id: string, userId: string) {
-  const exerciseRaw = await prisma.exercise.findUnique({
-    where: { id: Number(id) },
-    include: {
-      logs: {
-        where: { userId },
-        orderBy: { created_at: 'desc' },
+  const exerciseRaw: ExerciseWithLogs | null = await prisma.exercise.findUnique(
+    {
+      where: { id: Number(id) },
+      include: {
+        logs: {
+          where: { userId },
+          orderBy: { created_at: 'desc' },
+        },
       },
-    },
-  })
+    }
+  )
 
   if (!exerciseRaw) return null
 

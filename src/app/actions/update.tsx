@@ -28,18 +28,18 @@ export async function updateLog(
   logId: number | undefined,
   formData: formDataProps | undefined
 ) {
-  if (formData) {
-    await prisma.log.update({
-      where: {
-        id: logId,
-      },
-      data: {
-        weight: formData.weight,
-        sets: formData.sets,
-        reps: formData.reps,
-      },
-    })
-  }
+  if (!logId || !formData) return
+
+  await prisma.log.update({
+    where: {
+      id: logId,
+    },
+    data: {
+      weight: Number(formData.weight),
+      sets: formData.sets,
+      reps: formData.reps,
+    },
+  })
 }
 
 export async function updateExerciseName(

@@ -23,11 +23,11 @@ interface AddWorkoutInput {
 }
 
 export async function addLog(input: AddLogInput) {
-  await prisma.log.create({
+  const log = await prisma.log.create({
     data: {
       userId: input.userId,
       exerciseId: input.exerciseId,
-      weight: input.weight,
+      weight: Number(input.weight),
       reps: input.reps,
       sets: input.sets,
     },
@@ -35,6 +35,11 @@ export async function addLog(input: AddLogInput) {
       exercise: true,
     },
   })
+
+  return {
+    ...log,
+    weight: Number(log.weight),
+  }
 }
 
 export async function addExercise(input: AddExerciseInput) {
