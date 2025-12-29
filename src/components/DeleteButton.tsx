@@ -53,7 +53,9 @@ export default function DeleteButton({
     <>
       <button
         className={styles.deleteButton}
-        onClick={() => setShowDialog(true)}
+        onClick={() => {
+          setShowDialog(true)
+        }}
         aria-label={`Delete ${name}`}
       >
         <TrashIcon />
@@ -64,12 +66,14 @@ export default function DeleteButton({
             <p>Are you sure you want to delete {name}?</p>
             <div className={styles.buttonWrapper}>
               <button
-                onClick={() => setShowDialog(false)}
+                onClick={() => {
+                  setShowDialog(false)
+                }}
                 className={styles.cancel}
               >
                 Cancel
               </button>
-              <button onClick={deleteItem} className={styles.submit}>
+              <button onClick={() => deleteItem} className={styles.submit}>
                 Delete
               </button>
             </div>

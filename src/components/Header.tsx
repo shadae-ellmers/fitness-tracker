@@ -25,7 +25,14 @@ export default function Header() {
       <div className={styles.userContainer}>
         <div className={styles.profilePhotoContainer}>
           {user && user.picture ? (
-            <img src={user.picture} alt={`Profile picture for ${user.name}`} />
+            <img
+              src={user.picture}
+              alt={
+                user.name
+                  ? `Profile picture for ${user.name}`
+                  : 'Profile picture'
+              }
+            />
           ) : (
             <div className={styles.profilePhotoEmpty} aria-hidden="true"></div>
           )}

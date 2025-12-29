@@ -33,7 +33,7 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
     sets: '',
   })
 
-  const [formSubmitState, setFormSubmitState] = useState(String || null)
+  const [formSubmitState, setFormSubmitState] = useState(String)
 
   const [selectedExercise, setSelectedExercise] = useState<SelectOption | null>(
     null
@@ -53,7 +53,7 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
       }
 
       await addLog({
-        userId: user?.sub,
+        userId: user.sub,
         exerciseId: Number(formData.exerciseId),
         weight: Number(formData.weight),
         reps: Number(formData.reps),
@@ -69,7 +69,7 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={() => handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Exercise
           <Select

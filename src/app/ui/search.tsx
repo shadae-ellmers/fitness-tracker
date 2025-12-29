@@ -6,7 +6,7 @@ import styles from './search.module.css'
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const { replace } = useRouter()
+  const router = useRouter()
 
   function handleSearch(term: string) {
     const params = new URLSearchParams(searchParams)
@@ -17,7 +17,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       params.delete('query')
     }
 
-    replace(`${pathname}?${params.toString()}`)
+    router.replace(`${pathname}?${params.toString()}`)
   }
 
   return (

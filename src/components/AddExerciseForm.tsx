@@ -29,7 +29,7 @@ export default function AddExerciseForm({ userId }: AddExerciseProps) {
     try {
       await addExercise({
         userId: userId,
-        name: String(formData.name),
+        name: formData.name,
       })
 
       router.push('/exercises?status=success')
@@ -42,7 +42,7 @@ export default function AddExerciseForm({ userId }: AddExerciseProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={() => handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Name
           <input

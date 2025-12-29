@@ -52,7 +52,9 @@ export default function WorkoutToolbar({
       <div className={styles.toolbarButtons}>
         <button
           className={styles.plusIcon}
-          onClick={() => setDisplayForm(!displayForm)}
+          onClick={() => {
+            setDisplayForm(!displayForm)
+          }}
           aria-label="Add exercises to workout"
         >
           <PlusIcon />
@@ -60,7 +62,7 @@ export default function WorkoutToolbar({
       </div>
 
       {displayForm && (
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form className={styles.form} onSubmit={() => onSubmit}>
           <label className={styles.select}>
             <Select
               isMulti
@@ -74,11 +76,11 @@ export default function WorkoutToolbar({
               }))}
               onChange={(
                 selected: MultiValue<{ value: number; label: string }>
-              ) =>
+              ) => {
                 setSelectedExercises(
                   selected.map((s) => ({ id: s.value, name: s.label }))
                 )
-              }
+              }}
               placeholder="Search and select exercises..."
               className={styles.fieldSelectInput}
               styles={{

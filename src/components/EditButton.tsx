@@ -28,8 +28,6 @@ export default function EditButton({ data, path }: EditButtonProps) {
   })
 
   useEffect(() => {
-    if (!data) return
-
     setFormData({
       weight: data.weight,
       reps: data.reps,
@@ -69,15 +67,17 @@ export default function EditButton({ data, path }: EditButtonProps) {
     <>
       <button
         className={styles.deleteButton}
-        onClick={() => setShowDialog(true)}
-        aria-label={`Edit ${data.title}`}
+        onClick={() => {
+          setShowDialog(true)
+        }}
+        aria-label={data.title ? `Edit ${data.title}` : 'Edit'}
       >
         <PencilIcon />
       </button>
       {showDialog && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <form onSubmit={handleSubmit} className={styles.form}>
+            <form onSubmit={() => handleSubmit} className={styles.form}>
               <label className={styles.field}>
                 Weight (kg)
                 <input

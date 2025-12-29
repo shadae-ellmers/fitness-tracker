@@ -4,12 +4,10 @@ import { useState } from 'react'
 import HamburgerIcon from './Icons/HamburgerIcon'
 import styles from './styles/navigation.module.css'
 import CloseIcon from './Icons/CloseIcon'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function Navigation() {
   const [navDisplay, setNavDisplay] = useState(false)
-  const router = useRouter()
 
   const toggleNav = () => {
     setNavDisplay(!navDisplay)
@@ -21,12 +19,6 @@ export default function Navigation() {
     { label: 'Workouts', path: '/workouts' },
     { label: 'Logs', path: '/logs' },
   ]
-
-  const goToPage = (path: string) => {
-    const route = `/${path}`
-    router.push(route)
-    setNavDisplay(false)
-  }
 
   return (
     <>
@@ -48,7 +40,9 @@ export default function Navigation() {
                 <Link
                   href={link.path}
                   className={styles.linkItem}
-                  onClick={() => setNavDisplay(false)}
+                  onClick={() => {
+                    setNavDisplay(false)
+                  }}
                 >
                   {link.label}
                 </Link>

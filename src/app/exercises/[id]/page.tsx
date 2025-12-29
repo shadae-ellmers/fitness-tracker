@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className={styles.exercise}>
       <BackLink link="/exercises" />
       <NameContainer
-        name={exercise?.name}
+        name={exercise.name}
         primaryId={exercise.id}
         userId={user.sub}
         type="exercise"
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <DataCard data={maxLog} index={0} type="personalBest" />
             <h2 className={styles.headingText}>All logs</h2>
             <ul>
-              {exercise?.logs.map((log, index) => (
+              {exercise.logs.map((log, index) => (
                 <DataCard
                   data={log}
                   index={index}

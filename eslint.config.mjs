@@ -1,26 +1,31 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  {
-    ignores: [
+export default defineConfig(
+  [
+    globalIgnores([
       'node_modules/**',
       '.next/**',
       'out/**',
       'build/**',
       'next-env.d.ts',
       'src/generated/**',
+      '**/*.js',
+    ]),
+  ],
+  tseslint.config({
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.strictTypeChecked,
     ],
-  },
-]
-
-export default eslintConfig
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: new URL('.', import.meta.url).pathname,
+        project: './tsconfig.json',
+      },
+    },
+  })
+)

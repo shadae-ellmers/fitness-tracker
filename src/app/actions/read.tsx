@@ -2,10 +2,13 @@
 
 import prisma from '../../../prisma/prisma'
 import { formatDate } from '../helpers/strings'
-import { Prisma } from '../../generated/prisma'
+import { Prisma, Exercise } from '../../generated/prisma'
 
 type LogWithExercise = Prisma.LogGetPayload<{ include: { exercise: true } }>
 type ExerciseWithLogs = Prisma.ExerciseGetPayload<{ include: { logs: true } }>
+type WorkoutWithCount = Prisma.WorkoutGetPayload<{
+  include: { _count: { select: { exercises: true } } }
+}>
 
 export async function getLogs(userId: string, query: string = '') {
   const logsRaw: LogWithExercise[] = await prisma.log.findMany({
@@ -26,7 +29,7 @@ export async function getLogs(userId: string, query: string = '') {
     },
   })
 
-  const logs = logsRaw.map((log) => ({
+  const logs = logsRaw.map((log: LogWithExercise) => ({
     title: log.exercise.name,
     id: log.id,
     created_at: formatDate(log.created_at),
@@ -39,7 +42,7 @@ export async function getLogs(userId: string, query: string = '') {
 }
 
 export async function getExercises(userId: string, query: string = '') {
-  const exercises = await prisma.exercise.findMany({
+  const exercises: Exercise[] = await prisma.exercise.findMany({
     where: {
       userId,
       name: {
@@ -52,7 +55,7 @@ export async function getExercises(userId: string, query: string = '') {
     },
   })
 
-  const exercisesMap = exercises.map((exercise) => ({
+  const exercisesMap = exercises.map((exercise: Exercise) => ({
     id: exercise.id,
     title: exercise.name,
   }))
@@ -60,7 +63,7 @@ export async function getExercises(userId: string, query: string = '') {
   return exercisesMap
 }
 
-export async function getAllExercises(userId: string) {
+export async function getAllExercises(userId: string): Promise<Exercise[]> {
   const exercises = await prisma.exercise.findMany({
     where: {
       userId,
@@ -73,7 +76,7 @@ export async function getAllExercises(userId: string) {
 export async function getAllExercisesExcludingExisting(
   userId: string,
   workoutId: number
-) {
+): Promise<Exercise[]> {
   return prisma.exercise.findMany({
     where: {
       userId,
@@ -90,7 +93,7 @@ export async function getAllExercisesExcludingExisting(
 }
 
 export async function getWorkouts(userId: string, query: string = '') {
-  const workouts = await prisma.workout.findMany({
+  const workouts: WorkoutWithCount[] = await prisma.workout.findMany({
     where: {
       userId,
       name: {
@@ -108,7 +111,7 @@ export async function getWorkouts(userId: string, query: string = '') {
     },
   })
 
-  return workouts.map((workout) => ({
+  return workouts.map((workout: WorkoutWithCount) => ({
     title: workout.name,
     id: workout.id,
     exerciseCount: workout._count.exercises,
@@ -187,7 +190,7 @@ export async function getWorkout(id: string, userId: string) {
   const exercises = workoutRaw.exercises.map((exercise) => {
     const log = exercise.logs[0]
 
-    return log
+    return exercise.logs.length >= 0
       ? {
           id: exercise.id,
           secondaryId: workoutRaw.id,
@@ -211,7 +214,12 @@ export async function getWorkout(id: string, userId: string) {
 }
 
 export async function getProgress(userId: string) {
-  const raw = await prisma.log.findMany({
+  const raw: {
+    created_at: Date
+    sets: number | null
+    reps: number | null
+    weight: Prisma.Decimal
+  }[] = await prisma.log.findMany({
     where: {
       userId,
     },
@@ -227,7 +235,7 @@ export async function getProgress(userId: string) {
 
   raw.forEach((log) => {
     const date = log.created_at.toISOString().split('T')[0]
-    const volume = (log.sets ?? 0) * (log.reps ?? 0) * (Number(log.weight) ?? 0)
+    const volume = (log.sets ?? 0) * (log.reps ?? 0) * Number(log.weight)
 
     if (!dailyMap[date]) {
       dailyMap[date] = 0
@@ -254,7 +262,12 @@ export async function getProgressLastMonth(userId: string) {
   const thirtyDaysAgo = new Date()
   thirtyDaysAgo.setDate(today.getDate() - 30)
 
-  const raw = await prisma.log.findMany({
+  const raw: {
+    created_at: Date
+    sets: number | null
+    reps: number | null
+    weight: Prisma.Decimal
+  }[] = await prisma.log.findMany({
     where: {
       userId,
       created_at: {
@@ -273,7 +286,7 @@ export async function getProgressLastMonth(userId: string) {
 
   raw.forEach((log) => {
     const date = log.created_at.toISOString().split('T')[0]
-    const volume = (log.sets ?? 0) * (log.reps ?? 0) * (Number(log.weight) ?? 0)
+    const volume = (log.sets ?? 0) * (log.reps ?? 0) * Number(log.weight)
 
     if (!dailyMap[date]) {
       dailyMap[date] = 0

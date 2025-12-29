@@ -97,7 +97,10 @@ export default function DataCard({
               name={data.title}
               path={`/${type}`}
             />
-            <GoToPageButton path={`/${type}/${data.id}`} name={data.title} />
+            <GoToPageButton
+              path={`/${type}/${String(data.id)}`}
+              name={data.title}
+            />
           </div>
         )}
       {data.id &&
@@ -111,10 +114,10 @@ export default function DataCard({
               secondaryId={data.secondaryId}
               action={type}
               name={data.title}
-              path={`/${parentType}/${parentId}`}
+              path={`/${parentType}/${String(parentId)}`}
             />
             <GoToPageButton
-              path={`/${parentType}/${data?.id}`}
+              path={`/${parentType}/${String(data.id)}`}
               name={data.title}
             />
           </div>
@@ -126,7 +129,7 @@ export default function DataCard({
             secondaryId={data.secondaryId}
             action={type}
             name={data.title}
-            path={`/${parentType}/${parentId}`}
+            path={`/${parentType}/${String(parentId)}`}
           />
         </div>
       )}

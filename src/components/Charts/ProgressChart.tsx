@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function ProgressChart({ data, dateRange = null }: Props) {
-  if (!data || data.length === 0) {
+  if (data.length === 0) {
     return <p className={styles.text}>No progress data available yet.</p>
   }
 
@@ -90,6 +90,7 @@ export default function ProgressChart({ data, dateRange = null }: Props) {
           color: '#222223',
         },
         ticks: {
+          /* eslint-disable  @typescript-eslint/restrict-template-expressions */
           callback: (value: string | number) => `${value}`,
           color: '#222223',
         },

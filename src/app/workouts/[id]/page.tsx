@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className={styles.exercise}>
       <BackLink link="/workouts" />
       <NameContainer
-        name={workout?.name}
+        name={workout.name}
         primaryId={workout.id}
         userId={user.sub}
         type="workout"
@@ -40,12 +40,12 @@ export default async function Page({ params }: { params: { id: string } }) {
           exercises={exercises}
           userId={user.sub}
           workoutId={workout.id}
-          exerciseCount={workout?.exercises.length}
+          exerciseCount={workout.exercises.length}
         />
       </div>
-      {workout?.exercises.length >= 1 && (
+      {workout.exercises.length >= 1 && (
         <ul>
-          {workout?.exercises.map((exercise, index) => (
+          {workout.exercises.map((exercise, index) => (
             <DataCard
               data={exercise}
               index={index}

@@ -57,7 +57,7 @@ export default function AddWorkoutForm({ exercises }: AddWorkoutFormProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={() => handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Name
           <input

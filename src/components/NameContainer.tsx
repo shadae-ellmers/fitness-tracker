@@ -50,12 +50,14 @@ export default function NameContainer({
   return (
     <div className={styles.nameContainer}>
       {isEditing ? (
-        <form className={styles.form} onSubmit={saveName}>
+        <form className={styles.form} onSubmit={() => saveName}>
           <input
             ref={inputRef}
             className={styles.input}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => {
+              setValue(e.target.value)
+            }}
           />
           <button
             type="submit"

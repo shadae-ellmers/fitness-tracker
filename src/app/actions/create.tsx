@@ -27,6 +27,7 @@ export async function addLog(input: AddLogInput) {
     data: {
       userId: input.userId,
       exerciseId: input.exerciseId,
+      /* eslint-disable  @typescript-eslint/no-unnecessary-type-conversion */
       weight: Number(input.weight),
       reps: input.reps,
       sets: input.sets,
