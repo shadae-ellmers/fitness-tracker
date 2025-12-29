@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from '../../../prisma/prisma'
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma'
 
 interface AddLogInput {
   userId: string
