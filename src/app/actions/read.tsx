@@ -2,7 +2,7 @@
 
 import prisma from '../../../prisma/prisma'
 import { formatDate } from '../helpers/strings'
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma'
 
 type LogWithExercise = Prisma.LogGetPayload<{ include: { exercise: true } }>
 type ExerciseWithLogs = Prisma.ExerciseGetPayload<{ include: { logs: true } }>
