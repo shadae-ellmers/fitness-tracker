@@ -1,23 +1,11 @@
-import prisma from '../../../prisma/prisma'
+import { getAuth0UserId } from '@/lib/auth0/session'
 
-type SessionUser = {
-  sub: string
-}
+export async function findOrCreateUser(session: { user?: unknown }) {
+  const userId = getAuth0UserId(session)
 
-type Session = {
-  user: SessionUser
-}
-
-export async function findOrCreateUser(session: Session) {
-  const userId = session.user.sub
-
-  const user = await prisma.user.upsert({
+  return prisma?.user.upsert({
     where: { id: userId },
     update: {},
-    create: {
-      id: userId,
-    },
+    create: { id: userId },
   })
-
-  return user
 }
