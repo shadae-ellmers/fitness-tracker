@@ -7,11 +7,11 @@ import { useRouter } from 'next/navigation'
 import { useUser } from '@auth0/nextjs-auth0'
 import Select, { MultiValue } from 'react-select'
 
-type AddWorkoutFormProps = {
+interface AddWorkoutFormProps {
   exercises: Exercise[]
 }
 
-type Exercise = {
+interface Exercise {
   id: number
   name: string
 }
@@ -55,9 +55,11 @@ export default function AddWorkoutForm({ exercises }: AddWorkoutFormProps) {
     }
   }
 
+  const uniqueId = Math.random().toString()
+
   return (
     <>
-      <form onSubmit={() => handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Name
           <input
@@ -71,6 +73,8 @@ export default function AddWorkoutForm({ exercises }: AddWorkoutFormProps) {
         <label className={styles.selectField}>
           Exercises
           <Select
+            required
+            instanceId={uniqueId}
             isMulti
             options={exercises.map((ex) => ({ value: ex.id, label: ex.name }))}
             value={selectedExercises.map((ex) => ({

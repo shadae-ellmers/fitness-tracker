@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from '../../../prisma/prisma'
+import { prisma } from '../../../prisma/prisma'
 import { Prisma } from '../../generated/prisma'
 
 interface AddLogInput {
@@ -23,12 +23,11 @@ interface AddWorkoutInput {
 }
 
 export async function addLog(input: AddLogInput) {
-  const log = await prisma.log.create({
+  await prisma.log.create({
     data: {
       userId: input.userId,
       exerciseId: input.exerciseId,
-      /* eslint-disable  @typescript-eslint/no-unnecessary-type-conversion */
-      weight: Number(input.weight),
+      weight: input.weight,
       reps: input.reps,
       sets: input.sets,
     },
@@ -36,16 +35,11 @@ export async function addLog(input: AddLogInput) {
       exercise: true,
     },
   })
-
-  return {
-    ...log,
-    weight: Number(log.weight),
-  }
 }
 
 export async function addExercise(input: AddExerciseInput) {
   try {
-    return await prisma.exercise.create({
+    await prisma.exercise.create({
       data: {
         userId: input.userId,
         name: input.name,
@@ -64,7 +58,7 @@ export async function addExercise(input: AddExerciseInput) {
 
 export async function addWorkout(input: AddWorkoutInput) {
   try {
-    return await prisma.workout.create({
+    await prisma.workout.create({
       data: {
         userId: input.userId,
         name: input.name,

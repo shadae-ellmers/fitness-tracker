@@ -1,4 +1,4 @@
-import type { Auth0User } from './types'
+import { Auth0User } from './types'
 
 export function isAuth0User(user: unknown): user is Auth0User {
   return (

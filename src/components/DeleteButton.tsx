@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import TrashIcon from './Icons/TrashIcon'
 
-type DeleteButtonProps = {
+interface DeleteButtonProps {
   primaryId: number
   secondaryId?: number | undefined
   action: string
@@ -73,7 +73,7 @@ export default function DeleteButton({
               >
                 Cancel
               </button>
-              <button onClick={() => deleteItem} className={styles.submit}>
+              <button onClick={deleteItem} className={styles.submit}>
                 Delete
               </button>
             </div>

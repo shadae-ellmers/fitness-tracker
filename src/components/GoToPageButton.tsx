@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import ArrowRightIcon from './Icons/ArrowRightIcon'
 import styles from './styles/actionButton.module.css'
 
-type GoToPageButtonProps = {
+interface GoToPageButtonProps {
   path: string
   name: string
 }

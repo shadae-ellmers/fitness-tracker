@@ -6,7 +6,7 @@ import styles from './styles/actionButton.module.css'
 import { useRouter } from 'next/navigation'
 import { updateLog } from '@/app/actions/update'
 
-type EditButtonProps = {
+interface EditButtonProps {
   data: {
     title?: string
     id?: number
@@ -22,23 +22,26 @@ export default function EditButton({ data, path }: EditButtonProps) {
   const router = useRouter()
 
   const [formData, setFormData] = useState({
-    weight: data.weight,
-    reps: data.reps,
-    sets: data.sets,
+    weight: Number(data.weight),
+    reps: Number(data.reps),
+    sets: Number(data.sets),
   })
 
   useEffect(() => {
     setFormData({
-      weight: data.weight,
-      reps: data.reps,
-      sets: data.sets,
+      weight: Number(data.weight),
+      reps: Number(data.reps),
+      sets: Number(data.sets),
     })
   }, [data])
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: Number(value),
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,7 +51,6 @@ export default function EditButton({ data, path }: EditButtonProps) {
       await updateLog(data.id, formData)
       router.push(path)
       setShowDialog(false)
-      console.log(path)
     } catch (err) {
       console.error(err)
     }
@@ -57,9 +59,9 @@ export default function EditButton({ data, path }: EditButtonProps) {
   const handleCancel = () => {
     setShowDialog(false)
     setFormData({
-      weight: data.weight,
-      reps: data.reps,
-      sets: data.sets,
+      weight: Number(data.weight),
+      reps: Number(data.reps),
+      sets: Number(data.sets),
     })
   }
 
@@ -77,7 +79,7 @@ export default function EditButton({ data, path }: EditButtonProps) {
       {showDialog && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <form onSubmit={() => handleSubmit} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
               <label className={styles.field}>
                 Weight (kg)
                 <input

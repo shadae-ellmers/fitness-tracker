@@ -7,16 +7,16 @@ import { useUser } from '@auth0/nextjs-auth0'
 import { useRouter } from 'next/navigation'
 import Select from 'react-select'
 
-type AddLogFormProps = {
+interface AddLogFormProps {
   exercises: Exercise[]
 }
 
-type Exercise = {
+interface Exercise {
   id: number
   name: string
 }
 
-type SelectOption = {
+interface SelectOption {
   value: number
   label: string
 }
@@ -27,7 +27,6 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
   const router = useRouter()
 
   const [formData, setFormData] = useState({
-    exerciseId: '',
     weight: '',
     reps: '',
     sets: '',
@@ -48,13 +47,13 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     try {
-      if (!user?.sub) {
+      if (!user?.sub || selectedExercise == null) {
         return
       }
 
       await addLog({
         userId: user.sub,
-        exerciseId: Number(formData.exerciseId),
+        exerciseId: selectedExercise.value,
         weight: Number(formData.weight),
         reps: Number(formData.reps),
         sets: Number(formData.sets),
@@ -67,21 +66,21 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
     }
   }
 
+  const uniqueId = 'logForm-addExercise'
+
   return (
     <>
-      <form onSubmit={() => handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Exercise
           <Select
+            required
+            instanceId={uniqueId}
             isMulti={false}
             options={exercises.map((ex) => ({ value: ex.id, label: ex.name }))}
             value={selectedExercise}
             onChange={(selected) => {
-              setSelectedExercise(selected)
-              setFormData((prev) => ({
-                ...prev,
-                exerciseId: selected?.value.toString() ?? '',
-              }))
+              setSelectedExercise(selected as SelectOption | null)
             }}
             placeholder="Search and select exercises..."
             className={styles.fieldSelectInput}

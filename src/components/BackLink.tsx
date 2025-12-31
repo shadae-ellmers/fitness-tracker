@@ -4,7 +4,7 @@ import Link from 'next/link'
 import ChevronLeftIcon from './Icons/ChevronLeftIcon'
 import styles from './styles/backLink.module.css'
 
-type BackLinkProps = {
+interface BackLinkProps {
   link: string
 }
 

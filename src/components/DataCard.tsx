@@ -5,7 +5,7 @@ import DeleteButton from './DeleteButton'
 import GoToPageButton from './GoToPageButton'
 import EditButton from './EditButton'
 
-type DataCard = {
+interface DataCard {
   id?: number
   secondaryId?: number
   title?: string
@@ -16,7 +16,7 @@ type DataCard = {
   exerciseCount?: number
 }
 
-type DataCardProps = {
+interface DataCardProps {
   data: DataCard
   index: number
   type: string

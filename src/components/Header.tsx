@@ -24,7 +24,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.userContainer}>
         <div className={styles.profilePhotoContainer}>
-          {user && user.picture ? (
+          {user?.picture ? (
             <img
               src={user.picture}
               alt={
@@ -39,7 +39,7 @@ export default function Header() {
         </div>
         <div className={styles.userGreeting}>
           <h1 className={styles.greeting}>{getGreeting()}</h1>
-          {user && user.name ? (
+          {user?.name ? (
             <h2 className={styles.userName}>{user.name.split(' ')[0]}</h2>
           ) : (
             <></>

@@ -7,12 +7,12 @@ import CheckIcon from './Icons/CheckIcon'
 import styles from './styles/workoutToolbar.module.css'
 import { updateWorkoutExercises } from '@/app/actions/update'
 
-type Exercise = {
+interface Exercise {
   id: number
   name: string
 }
 
-type WorkoutToolbarProps = {
+interface WorkoutToolbarProps {
   workoutId: number
   userId: string
   exercises: Exercise[]
@@ -47,6 +47,8 @@ export default function WorkoutToolbar({
     }
   }
 
+  const uniqueId = Math.random().toString()
+
   return (
     <div className={styles.toolbar}>
       <div className={styles.toolbarButtons}>
@@ -62,9 +64,11 @@ export default function WorkoutToolbar({
       </div>
 
       {displayForm && (
-        <form className={styles.form} onSubmit={() => onSubmit}>
+        <form className={styles.form} onSubmit={onSubmit}>
           <label className={styles.select}>
             <Select
+              required
+              instanceId={uniqueId}
               isMulti
               options={exercises.map((ex) => ({
                 value: ex.id,

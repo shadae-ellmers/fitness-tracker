@@ -5,7 +5,7 @@ import styles from './styles/addForm.module.css'
 import { addExercise } from '@/app/actions/create'
 import { useRouter } from 'next/navigation'
 
-type AddExerciseProps = {
+interface AddExerciseProps {
   userId: string
 }
 
@@ -42,7 +42,7 @@ export default function AddExerciseForm({ userId }: AddExerciseProps) {
 
   return (
     <>
-      <form onSubmit={() => handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.field}>
           Name
           <input

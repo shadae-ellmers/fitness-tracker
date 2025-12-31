@@ -1,3 +1,3 @@
-export type Auth0User = {
+export interface Auth0User {
   sub: string
 }

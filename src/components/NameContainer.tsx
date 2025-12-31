@@ -7,7 +7,7 @@ import { useRef, useState } from 'react'
 import CheckIcon from './Icons/CheckIcon'
 import CloseIcon from './Icons/CloseIcon'
 
-type NameContainerProps = {
+interface NameContainerProps {
   name: string
   primaryId: number
   userId: string
@@ -50,7 +50,7 @@ export default function NameContainer({
   return (
     <div className={styles.nameContainer}>
       {isEditing ? (
-        <form className={styles.form} onSubmit={() => saveName}>
+        <form className={styles.form} onSubmit={saveName}>
           <input
             ref={inputRef}
             className={styles.input}

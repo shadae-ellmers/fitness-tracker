@@ -13,8 +13,8 @@ export default async function Logs(props: {
   }>
 }) {
   const searchParams = await props.searchParams
-  const query = searchParams?.query || ''
-  const status = searchParams?.status || ''
+  const query = searchParams?.query ?? ''
+  const status = searchParams?.status ?? ''
 
   const user = await getUser()
 

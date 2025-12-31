@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from '../../../prisma/prisma'
+import { prisma } from '../../../prisma/prisma'
 
 export async function updateWorkoutName(
   workoutId: number,
@@ -18,7 +18,7 @@ export async function updateWorkoutName(
   })
 }
 
-type formDataProps = {
+interface formDataProps {
   weight: number | undefined
   sets: number | undefined
   reps: number | undefined
@@ -35,7 +35,7 @@ export async function updateLog(
       id: logId,
     },
     data: {
-      weight: Number(formData.weight),
+      weight: formData.weight,
       sets: formData.sets,
       reps: formData.reps,
     },

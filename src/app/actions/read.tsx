@@ -1,20 +1,10 @@
 'use server'
 
-import prisma from '../../../prisma/prisma'
+import { prisma } from '../../../prisma/prisma'
 import { formatDate } from '../helpers/strings'
-import { Prisma, Exercise } from '../../generated/prisma'
 
-type LogWithExercise = Prisma.LogGetPayload<{ include: { exercise: true } }>
-type ExerciseWithLogs = Prisma.ExerciseGetPayload<{ include: { logs: true } }>
-type WorkoutWithCount = Prisma.WorkoutGetPayload<{
-  include: { _count: { select: { exercises: true } } }
-}>
-type WorkoutWithExercisesAndLogs = Prisma.WorkoutGetPayload<{
-  include: { exercises: { include: { logs: true } } }
-}>
-
-export async function getLogs(userId: string, query: string = '') {
-  const logsRaw: LogWithExercise[] = await prisma.log.findMany({
+export async function getLogs(userId: string, query = '') {
+  const logsRaw = await prisma.log.findMany({
     where: {
       userId,
       exercise: {
@@ -32,11 +22,11 @@ export async function getLogs(userId: string, query: string = '') {
     },
   })
 
-  const logs = logsRaw.map((log: LogWithExercise) => ({
+  const logs = logsRaw.map((log) => ({
     title: log.exercise.name,
     id: log.id,
     created_at: formatDate(log.created_at),
-    weight: Number(log.weight),
+    weight: log.weight,
     reps: log.reps,
     sets: log.sets,
   }))
@@ -44,8 +34,8 @@ export async function getLogs(userId: string, query: string = '') {
   return logs
 }
 
-export async function getExercises(userId: string, query: string = '') {
-  const exercises: Exercise[] = await prisma.exercise.findMany({
+export async function getExercises(userId: string, query = '') {
+  const exercises = await prisma.exercise.findMany({
     where: {
       userId,
       name: {
@@ -58,7 +48,7 @@ export async function getExercises(userId: string, query: string = '') {
     },
   })
 
-  const exercisesMap = exercises.map((exercise: Exercise) => ({
+  const exercisesMap = exercises.map((exercise) => ({
     id: exercise.id,
     title: exercise.name,
   }))
@@ -66,7 +56,7 @@ export async function getExercises(userId: string, query: string = '') {
   return exercisesMap
 }
 
-export async function getAllExercises(userId: string): Promise<Exercise[]> {
+export async function getAllExercises(userId: string) {
   const exercises = await prisma.exercise.findMany({
     where: {
       userId,
@@ -79,8 +69,8 @@ export async function getAllExercises(userId: string): Promise<Exercise[]> {
 export async function getAllExercisesExcludingExisting(
   userId: string,
   workoutId: number
-): Promise<Exercise[]> {
-  return prisma.exercise.findMany({
+) {
+  const exercises = await prisma.exercise.findMany({
     where: {
       userId,
       workouts: {
@@ -93,10 +83,12 @@ export async function getAllExercisesExcludingExisting(
       name: 'asc',
     },
   })
+
+  return exercises
 }
 
-export async function getWorkouts(userId: string, query: string = '') {
-  const workouts: WorkoutWithCount[] = await prisma.workout.findMany({
+export async function getWorkouts(userId: string, query = '') {
+  const workouts = await prisma.workout.findMany({
     where: {
       userId,
       name: {
@@ -114,7 +106,7 @@ export async function getWorkouts(userId: string, query: string = '') {
     },
   })
 
-  return workouts.map((workout: WorkoutWithCount) => ({
+  return workouts.map((workout) => ({
     title: workout.name,
     id: workout.id,
     exerciseCount: workout._count.exercises,
@@ -122,24 +114,22 @@ export async function getWorkouts(userId: string, query: string = '') {
 }
 
 export async function getExercise(id: string, userId: string) {
-  const exerciseRaw: ExerciseWithLogs | null = await prisma.exercise.findUnique(
-    {
-      where: { id: Number(id) },
-      include: {
-        logs: {
-          where: { userId },
-          orderBy: { created_at: 'desc' },
-        },
+  const exerciseRaw = await prisma.exercise.findUnique({
+    where: { id: Number(id) },
+    include: {
+      logs: {
+        where: { userId },
+        orderBy: { created_at: 'desc' },
       },
-    }
-  )
+    },
+  })
 
   if (!exerciseRaw) return null
 
   const logs = exerciseRaw.logs.map((log) => ({
     title: exerciseRaw.name,
     created_at: formatDate(log.created_at),
-    weight: Number(log.weight),
+    weight: log.weight,
     reps: log.reps,
     sets: log.sets,
   }))
@@ -158,7 +148,7 @@ export async function getExercise(id: string, userId: string) {
     ? {
         ...maxLogRaw,
         created_at: formatDate(maxLogRaw.created_at),
-        weight: Number(maxLogRaw.weight),
+        weight: maxLogRaw.weight,
       }
     : null
 
@@ -170,24 +160,23 @@ export async function getExercise(id: string, userId: string) {
 }
 
 export async function getWorkout(id: string, userId: string) {
-  const workoutRaw: WorkoutWithExercisesAndLogs | null =
-    await prisma.workout.findUnique({
-      where: {
-        userId,
-        id: Number(id),
-      },
-      include: {
-        exercises: {
-          include: {
-            logs: {
-              where: { userId },
-              orderBy: { weight: 'desc' },
-              take: 1,
-            },
+  const workoutRaw = await prisma.workout.findUnique({
+    where: {
+      userId,
+      id: Number(id),
+    },
+    include: {
+      exercises: {
+        include: {
+          logs: {
+            where: { userId },
+            orderBy: { weight: 'desc' },
+            take: 1,
           },
         },
       },
-    })
+    },
+  })
 
   if (!workoutRaw) return null
 
@@ -200,7 +189,7 @@ export async function getWorkout(id: string, userId: string) {
           secondaryId: workoutRaw.id,
           title: exercise.name,
           created_at: formatDate(log.created_at),
-          weight: Number(log.weight),
+          weight: log.weight,
           reps: log.reps,
           sets: log.sets,
         }
@@ -222,7 +211,7 @@ export async function getProgress(userId: string) {
     created_at: Date
     sets: number | null
     reps: number | null
-    weight: Prisma.Decimal
+    weight: number | null
   }[] = await prisma.log.findMany({
     where: {
       userId,
@@ -239,7 +228,7 @@ export async function getProgress(userId: string) {
 
   raw.forEach((log) => {
     const date = log.created_at.toISOString().split('T')[0]
-    const volume = (log.sets ?? 0) * (log.reps ?? 0) * Number(log.weight)
+    const volume = (log.sets ?? 0) * (log.reps ?? 0) * (log.weight ?? 0)
 
     if (!dailyMap[date]) {
       dailyMap[date] = 0
@@ -270,7 +259,7 @@ export async function getProgressLastMonth(userId: string) {
     created_at: Date
     sets: number | null
     reps: number | null
-    weight: Prisma.Decimal
+    weight: number | null
   }[] = await prisma.log.findMany({
     where: {
       userId,
@@ -290,7 +279,7 @@ export async function getProgressLastMonth(userId: string) {
 
   raw.forEach((log) => {
     const date = log.created_at.toISOString().split('T')[0]
-    const volume = (log.sets ?? 0) * (log.reps ?? 0) * Number(log.weight)
+    const volume = (log.sets ?? 0) * (log.reps ?? 0) * (log.weight ?? 0)
 
     if (!dailyMap[date]) {
       dailyMap[date] = 0
