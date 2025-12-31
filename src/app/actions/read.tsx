@@ -9,6 +9,9 @@ type ExerciseWithLogs = Prisma.ExerciseGetPayload<{ include: { logs: true } }>
 type WorkoutWithCount = Prisma.WorkoutGetPayload<{
   include: { _count: { select: { exercises: true } } }
 }>
+type WorkoutWithExercisesAndLogs = Prisma.WorkoutGetPayload<{
+  include: { exercises: { include: { logs: true } } }
+}>
 
 export async function getLogs(userId: string, query: string = '') {
   const logsRaw: LogWithExercise[] = await prisma.log.findMany({
@@ -167,30 +170,31 @@ export async function getExercise(id: string, userId: string) {
 }
 
 export async function getWorkout(id: string, userId: string) {
-  const workoutRaw = await prisma.workout.findUnique({
-    where: {
-      userId,
-      id: Number(id),
-    },
-    include: {
-      exercises: {
-        include: {
-          logs: {
-            where: { userId },
-            orderBy: { weight: 'desc' },
-            take: 1,
+  const workoutRaw: WorkoutWithExercisesAndLogs | null =
+    await prisma.workout.findUnique({
+      where: {
+        userId,
+        id: Number(id),
+      },
+      include: {
+        exercises: {
+          include: {
+            logs: {
+              where: { userId },
+              orderBy: { weight: 'desc' },
+              take: 1,
+            },
           },
         },
       },
-    },
-  })
+    })
 
   if (!workoutRaw) return null
 
   const exercises = workoutRaw.exercises.map((exercise) => {
     const log = exercise.logs[0]
 
-    return exercise.logs.length >= 0
+    return exercise.logs.length > 0
       ? {
           id: exercise.id,
           secondaryId: workoutRaw.id,
