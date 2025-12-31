@@ -47,7 +47,7 @@ model Log {
   exercise    Exercise  @relation(fields: [exerciseId], references: [id])
   exerciseId  Int
   sets        Int
-  weight      Decimal
+  weight      Float
   reps        Int
   created_at  DateTime  @default(now())
 }
