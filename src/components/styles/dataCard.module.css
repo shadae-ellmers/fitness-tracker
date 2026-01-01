@@ -60,3 +60,17 @@
 .logItemBlue {
   background-color: #b6caeb;
 }
+
+@media (min-width: 460px) {
+  .heading {
+    padding: 30px 30px 20px 30px;
+  }
+
+  .logItemStats {
+    padding: 0 30px 20px 30px;
+  }
+
+  .buttonWrapper {
+    padding: 0 30px 30px 30px;
+  }
+}

@@ -74,6 +74,7 @@ export default function ProgressChart({ data, dateRange = null }: Props) {
             return `${d}/${m}/${y}`
           },
           color: '#222223',
+          maxRotation: 0,
         },
       },
       y: {

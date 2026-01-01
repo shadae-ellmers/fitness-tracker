@@ -21,3 +21,9 @@
 .stat {
   font-size: 18px;
 }
+
+@media (min-width: 460px) {
+  .progress {
+    padding-bottom: 30px;
+  }
+}

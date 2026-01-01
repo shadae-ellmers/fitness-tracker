@@ -101,7 +101,6 @@
   text-align: center;
   border: 0;
   font-size: 16px;
-  margin-bottom: 20px;
 }
 
 .cancel {
@@ -113,11 +112,16 @@
   text-align: center;
   border: 2px solid #19160f;
   font-size: 16px;
-  margin-bottom: 20px;
 }
 
 .buttonWrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+@media (min-width: 460px) {
+  .modal {
+    padding: 30px;
+  }
 }

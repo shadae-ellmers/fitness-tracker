@@ -50,3 +50,9 @@
 .today {
   outline: 2px solid #faf4e4; 
 }
+
+@media (min-width: 460px) {
+  .text {
+    padding: 10px;
+  }
+}
