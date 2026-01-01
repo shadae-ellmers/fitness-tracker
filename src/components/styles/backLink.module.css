@@ -1,8 +1,15 @@
+.container {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #19160f;
+}
+
 .backLink {
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin-bottom: 20px;
+  width: fit-content;
+  padding-right: 12px;
 }
 
 .backIcon {
@@ -11,7 +18,7 @@
 }
 
 .backText {
-  font-size: 16px;
+  font-size: 18px;
   color: #19160f;
   height: 100%;
   display: flex;

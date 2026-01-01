@@ -10,11 +10,13 @@ interface BackLinkProps {
 
 export default function BackLink({ link }: BackLinkProps) {
   return (
-    <Link href={link} className={styles.backLink}>
-      <span className={styles.backIcon}>
-        <ChevronLeftIcon />
-      </span>
-      <div className={styles.backText}>Back</div>
-    </Link>
+    <div className={styles.container}>
+      <Link href={link} className={styles.backLink}>
+        <span className={styles.backIcon}>
+          <ChevronLeftIcon />
+        </span>
+        <div className={styles.backText}>Back</div>
+      </Link>
+    </div>
   )
 }
