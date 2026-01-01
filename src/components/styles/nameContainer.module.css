@@ -6,10 +6,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #19160f;
   align-items: center;
-  color: #faf4e4;
-  fill: #faf4e4;
+  background-color: #b6caeb;
+  color: #19160f;
+  fill: #19160f;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -24,10 +24,18 @@
 .nameContainer {
   display: flex;
   flex-direction: row;
-  padding-bottom: 12px;
+  justify-content: space-between;
+  padding-bottom: 20px;
 }
 
 .form {
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonWrapper {
   display: flex;
   flex-direction: row;
 }
@@ -43,9 +51,11 @@
   overflow: hidden;
   margin-right: 12px;
   border: 2px solid #19160f;
+  margin-bottom: 12px;
 }
 
-.checkIcon {
+.checkIcon,
+.closeIcon {
   border-radius: 100%;
   overflow: hidden;
   width: 50px;
@@ -53,13 +63,36 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #19160f;
   align-items: center;
-  color: #faf4e4;
-  fill: #faf4e4;
+  color: #19160f;
+  fill: #19160f;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-top: auto;
   margin-bottom: auto;
+  
+}
+
+.checkIcon {
+  background-color: #9da862;
   margin-right: 12px;
+}
+
+.closeIcon {
+  background-color: #f5b8da;
+}
+
+@media (min-width: 460px) {
+  .input {
+    font-size: 18px;
+    margin-bottom: unset;
+    width: 100%;
+    max-width: 70%;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
 }

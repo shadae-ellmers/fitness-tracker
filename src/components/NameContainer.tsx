@@ -59,23 +59,25 @@ export default function NameContainer({
               setValue(e.target.value)
             }}
           />
-          <button
-            type="submit"
-            className={styles.checkIcon}
-            disabled={!isEditing}
-            aria-label="Save"
-          >
-            <CheckIcon />
-          </button>
-          <button
-            type="button"
-            className={styles.checkIcon}
-            disabled={!isEditing}
-            aria-label="Cancel"
-            onClick={handleCancel}
-          >
-            <CloseIcon />
-          </button>
+          <div className={styles.buttonWrapper}>
+            <button
+              type="submit"
+              className={styles.checkIcon}
+              disabled={!isEditing}
+              aria-label="Save"
+            >
+              <CheckIcon />
+            </button>
+            <button
+              type="button"
+              className={styles.closeIcon}
+              disabled={!isEditing}
+              aria-label="Cancel"
+              onClick={handleCancel}
+            >
+              <CloseIcon />
+            </button>
+          </div>
         </form>
       ) : (
         <>
