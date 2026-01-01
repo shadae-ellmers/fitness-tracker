@@ -5,6 +5,7 @@ import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
 import DataCard from '@/components/DataCard'
 import getUser from '../helpers/auth'
+import SuccessMessage from '@/components/SuccessMessage'
 
 export default async function Workouts(props: {
   searchParams?: Promise<{
@@ -31,17 +32,28 @@ export default async function Workouts(props: {
         <Search placeholder="Search workouts..." />
       </div>
       {status === 'success' ? (
-        <div className={styles.successMessage}>
-          <h3 className={styles.successText}>Workout successfully added</h3>
-        </div>
+        <SuccessMessage name="workout" path="workouts" />
       ) : (
         <></>
       )}
-      <ul>
-        {workouts.map((workout, index) => (
-          <DataCard data={workout} index={index} key={index} type="workouts" />
-        ))}
-      </ul>
+      {!workouts.length && !query && (
+        <p className={styles.text}>No workouts found</p>
+      )}
+      {!workouts.length && query && (
+        <p className={styles.text}>No results found for &quot;{query}&quot;</p>
+      )}
+      {workouts.length >= 1 && (
+        <ul>
+          {workouts.map((workout, index) => (
+            <DataCard
+              data={workout}
+              index={index}
+              key={index}
+              type="workouts"
+            />
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

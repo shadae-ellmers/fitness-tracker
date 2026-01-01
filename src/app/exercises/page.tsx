@@ -5,6 +5,7 @@ import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
 import DataCard from '@/components/DataCard'
 import getUser from '../helpers/auth'
+import SuccessMessage from '@/components/SuccessMessage'
 
 export default async function Exercises(props: {
   searchParams?: Promise<{
@@ -31,22 +32,28 @@ export default async function Exercises(props: {
         <Search placeholder="Search exercises..." />
       </div>
       {status === 'success' ? (
-        <div className={styles.successMessage}>
-          <h3 className={styles.successText}>Exercise successfully added</h3>
-        </div>
+        <SuccessMessage name="exercise" path="exercises" />
       ) : (
         <></>
       )}
-      <ul>
-        {exercises.map((exercise, index) => (
-          <DataCard
-            data={exercise}
-            index={index}
-            key={index}
-            type="exercises"
-          />
-        ))}
-      </ul>
+      {!exercises.length && !query && (
+        <p className={styles.text}>No exercises found</p>
+      )}
+      {!exercises.length && query && (
+        <p className={styles.text}>No results found for &quot;{query}&quot;</p>
+      )}
+      {exercises.length >= 1 && (
+        <ul>
+          {exercises.map((exercise, index) => (
+            <DataCard
+              data={exercise}
+              index={index}
+              key={index}
+              type="exercises"
+            />
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

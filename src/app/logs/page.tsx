@@ -5,6 +5,7 @@ import Search from '../ui/search'
 import AddButton from '@/components/AddButton'
 import DataCard from '@/components/DataCard'
 import getUser from '../helpers/auth'
+import SuccessMessage from '@/components/SuccessMessage'
 
 export default async function Logs(props: {
   searchParams?: Promise<{
@@ -30,17 +31,10 @@ export default async function Logs(props: {
         <AddButton path="logs" ariaLabel="Create log" />
         <Search placeholder="Search logs..." />
       </div>
-      {status === 'success' ? (
-        <div className={styles.successMessage}>
-          <h3 className={styles.successText}>Log successfully added</h3>
-        </div>
-      ) : (
-        <></>
-      )}
-      {!logs.length && (
-        <p className={styles.successText}>
-          No results found for &quot;{query}&quot;
-        </p>
+      {status === 'success' ? <SuccessMessage name="log" path="logs" /> : <></>}
+      {!logs.length && !query && <p className={styles.text}>No logs found</p>}
+      {!logs.length && query && (
+        <p className={styles.text}>No results found for &quot;{query}&quot;</p>
       )}
       {logs.length >= 1 && (
         <ul>

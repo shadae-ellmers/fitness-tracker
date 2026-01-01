@@ -12,20 +12,7 @@
   justify-content: start;
 }
 
-.successMessage {
-  padding: 20px;
-  background-color: #9da862;
-  margin-bottom: 20px;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  text-align: center;
-}
-
-.successText {
+.text {
   font-weight: 500;
   font-size: 18px;
 }
