@@ -9,7 +9,7 @@ interface DataCard {
   id?: number
   secondaryId?: number
   title?: string
-  created_at?: string
+  date?: string
   weight?: number
   reps?: number
   sets?: number
@@ -63,8 +63,8 @@ export default function DataCard({
         {type !== 'personalBest' && data.title && (
           <h3 className={styles.logItemName}>{data.title}</h3>
         )}
-        {type !== 'workouts' && data.created_at && (
-          <h4 className={styles.logItemDate}>{data.created_at}</h4>
+        {type !== 'workouts' && data.date && (
+          <h4 className={styles.logItemDate}>{data.date}</h4>
         )}
         {type === 'workouts' && data.exerciseCount && (
           <h4 className={styles.logItemDate}>

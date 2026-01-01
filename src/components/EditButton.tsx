@@ -88,7 +88,7 @@ export default function EditButton({ data, path }: EditButtonProps) {
                   onChange={handleChange}
                   type="number"
                   min="0"
-                  step="0.1"
+                  step="0.25"
                   required
                   className={styles.fieldInput}
                 />

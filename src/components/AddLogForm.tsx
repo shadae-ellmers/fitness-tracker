@@ -26,7 +26,22 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
 
   const router = useRouter()
 
+  const getNowForDatetimeLocal = (): string => {
+    return new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Pacific/Auckland',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    })
+      .format(new Date())
+      .replace(', ', 'T')
+  }
+
   const [formData, setFormData] = useState({
+    date: getNowForDatetimeLocal(),
     weight: '',
     reps: '',
     sets: '',
@@ -51,12 +66,16 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
         return
       }
 
+      const localDate = formData.date
+      const utcDate = new Date(localDate).toISOString()
+
       await addLog({
         userId: user.sub,
         exerciseId: selectedExercise.value,
         weight: Number(formData.weight),
         reps: Number(formData.reps),
         sets: Number(formData.sets),
+        date: utcDate,
       })
 
       router.push('/logs?status=success')
@@ -110,6 +129,16 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
           />
         </label>
         <label className={styles.field}>
+          Date
+          <input
+            name="date"
+            type="datetime-local"
+            value={formData.date}
+            onChange={handleChange}
+            className={styles.fieldInput}
+          />
+        </label>
+        <label className={styles.field}>
           Weight (kg)
           <input
             name="weight"
@@ -117,7 +146,7 @@ export default function AddLogForm({ exercises }: AddLogFormProps) {
             onChange={handleChange}
             type="number"
             min="0"
-            step="0.1"
+            step="0.25"
             required
             className={styles.fieldInput}
           />

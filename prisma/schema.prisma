@@ -49,5 +49,5 @@ model Log {
   sets        Int
   weight      Float
   reps        Int
-  created_at  DateTime  @default(now())
+  date        DateTime  @default(now())
 }

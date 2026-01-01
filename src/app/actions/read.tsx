@@ -18,14 +18,14 @@ export async function getLogs(userId: string, query = '') {
       exercise: true,
     },
     orderBy: {
-      created_at: 'desc',
+      date: 'desc',
     },
   })
 
   const logs = logsRaw.map((log) => ({
     title: log.exercise.name,
     id: log.id,
-    created_at: formatDate(log.created_at),
+    date: formatDate(log.date),
     weight: log.weight,
     reps: log.reps,
     sets: log.sets,
@@ -119,7 +119,7 @@ export async function getExercise(id: string, userId: string) {
     include: {
       logs: {
         where: { userId },
-        orderBy: { created_at: 'desc' },
+        orderBy: { date: 'desc' },
       },
     },
   })
@@ -128,7 +128,7 @@ export async function getExercise(id: string, userId: string) {
 
   const logs = exerciseRaw.logs.map((log) => ({
     title: exerciseRaw.name,
-    created_at: formatDate(log.created_at),
+    date: formatDate(log.date),
     weight: log.weight,
     reps: log.reps,
     sets: log.sets,
@@ -147,7 +147,7 @@ export async function getExercise(id: string, userId: string) {
   const maxLog = maxLogRaw
     ? {
         ...maxLogRaw,
-        created_at: formatDate(maxLogRaw.created_at),
+        date: formatDate(maxLogRaw.date),
         weight: maxLogRaw.weight,
       }
     : null
@@ -188,7 +188,7 @@ export async function getWorkout(id: string, userId: string) {
           id: exercise.id,
           secondaryId: workoutRaw.id,
           title: exercise.name,
-          created_at: formatDate(log.created_at),
+          date: formatDate(log.date),
           weight: log.weight,
           reps: log.reps,
           sets: log.sets,
@@ -208,7 +208,7 @@ export async function getWorkout(id: string, userId: string) {
 
 export async function getProgress(userId: string) {
   const raw: {
-    created_at: Date
+    date: Date
     sets: number | null
     reps: number | null
     weight: number | null
@@ -217,7 +217,7 @@ export async function getProgress(userId: string) {
       userId,
     },
     select: {
-      created_at: true,
+      date: true,
       sets: true,
       reps: true,
       weight: true,
@@ -227,7 +227,7 @@ export async function getProgress(userId: string) {
   const dailyMap: Record<string, number> = {}
 
   raw.forEach((log) => {
-    const date = log.created_at.toISOString().split('T')[0]
+    const date = log.date.toISOString().split('T')[0]
     const volume = (log.sets ?? 0) * (log.reps ?? 0) * (log.weight ?? 0)
 
     if (!dailyMap[date]) {
@@ -256,19 +256,19 @@ export async function getProgressLastMonth(userId: string) {
   thirtyDaysAgo.setDate(today.getDate() - 30)
 
   const raw: {
-    created_at: Date
+    date: Date
     sets: number | null
     reps: number | null
     weight: number | null
   }[] = await prisma.log.findMany({
     where: {
       userId,
-      created_at: {
+      date: {
         gte: thirtyDaysAgo,
       },
     },
     select: {
-      created_at: true,
+      date: true,
       sets: true,
       reps: true,
       weight: true,
@@ -278,7 +278,7 @@ export async function getProgressLastMonth(userId: string) {
   const dailyMap: Record<string, number> = {}
 
   raw.forEach((log) => {
-    const date = log.created_at.toISOString().split('T')[0]
+    const date = log.date.toISOString().split('T')[0]
     const volume = (log.sets ?? 0) * (log.reps ?? 0) * (log.weight ?? 0)
 
     if (!dailyMap[date]) {
