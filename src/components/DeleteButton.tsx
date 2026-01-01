@@ -63,7 +63,9 @@ export default function DeleteButton({
       {showDialog && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <p>Are you sure you want to delete {name}?</p>
+            <p className={styles.text}>
+              Are you sure you want to delete {name}?
+            </p>
             <div className={styles.buttonWrapper}>
               <button
                 onClick={() => {

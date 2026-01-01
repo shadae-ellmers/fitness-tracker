@@ -11,6 +11,10 @@
   color: #19160f;
 }
 
+.logItem:last-of-type {
+  margin-bottom: 20px;
+}
+
 .heading {
   padding: 20px;
   display: flex;
@@ -64,6 +68,10 @@
 @media (min-width: 460px) {
   .heading {
     padding: 30px 30px 20px 30px;
+  }
+
+  .logItemName {
+    font-size: 22px;
   }
 
   .logItemStats {

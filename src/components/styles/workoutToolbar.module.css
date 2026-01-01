@@ -7,9 +7,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #faf4e4;
-  fill: #faf4e4;
-  background-color: #19160f;
+  background-color: #b6caeb;
+  color: #19160f;
+  fill: #19160f;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-right: 12px;
@@ -42,17 +42,17 @@
 }
 
 .checkIcon {
-    border-radius: 100%;
+  border-radius: 100%;
   overflow: hidden;
   width: 50px;
   height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #19160f;
   align-items: center;
-  color: #faf4e4;
-  fill: #faf4e4;
+  background-color: #9da862;
+  color: #19160f;
+  fill: #19160f;
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
