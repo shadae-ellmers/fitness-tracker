@@ -20,11 +20,11 @@ export default async function Page() {
   return (
     <div className={styles.homePage}>
       <h2>Past month progress</h2>
-      <div className={styles.progress}>
+      <div className={styles.progressMonth}>
         <ProgressChart data={lastMonthProgress} dateRange="month" />
       </div>
       <h2>Overall progress</h2>
-      <div className={styles.progress}>
+      <div className={styles.progressOverall}>
         <ProgressChart data={progress} />
       </div>
     </div>

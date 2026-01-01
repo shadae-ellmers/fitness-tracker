@@ -5,13 +5,21 @@
   margin-right: auto;
 }
 
-.progress {
-  background-color: #f6d868;
+.progressOverall,
+.progressMonth {
   color: #19160f;
   padding: 20px;
   border-radius: 30px;
   margin: 20px 0;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.progressMonth {
+  background-color: #f6d868;
+}
+
+.progressOverall {
+  background-color: #f5b8da;
 }
 
 .weekchange {
