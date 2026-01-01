@@ -45,4 +45,16 @@
   border: 0;
   font-size: 16px;
   margin-bottom: 20px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+@media (min-width: 460px) {
+  .fieldInput {
+    font-size: 18px;
+  }
+
+  .submit {
+    font-size: 18px;
+  }
 }

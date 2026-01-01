@@ -22,3 +22,9 @@
 .searchInput::placeholder {
   color: #19160f;
 }
+
+@media (min-width: 460px) {
+  .searchInput {
+    font-size: 18px;
+  }
+}
