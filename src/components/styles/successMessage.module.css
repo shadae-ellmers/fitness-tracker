@@ -1,0 +1,50 @@
+.successMessage {
+  padding: 20px;
+  background-color: #9da862;
+  margin-bottom: 20px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.successText {
+  font-weight: 500;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-right: 12px;
+  max-width: 77%;
+}
+
+.closeIcon {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: transparent;
+  align-items: center;
+  color: #19160f;;
+  fill: #19160f;;
+  border: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: #f5b8da;
+}
+
+@media (min-width: 460px) {
+  .successMessage {
+    padding: 20px 30px;
+  }
+}

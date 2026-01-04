@@ -1,0 +1,69 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.selectField {
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.fieldSelectInput {
+  margin-left: -20px;
+  margin-top: 12px;
+}
+
+.fieldInput {
+  margin-top: 12px;
+  margin-left: -20px;
+  padding: 15px 20px;
+  background-color: #faf4e4;
+  color: #19160f;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  border: 2px solid #19160f;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.submit {
+  padding: 20px;
+  background-color: #19160f;
+  color: #faf4e4;
+  border-radius: 30px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border: 2px solid #19160f;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  margin-top: 12px;
+  cursor: pointer;
+  max-width: 200px;
+}
+
+.submit:hover,
+.submit:focus {
+  background-color: #b6caeb;
+  border-color: #b6caeb;
+  color: #19160f;
+}
+
+@media (min-width: 460px) {
+  .fieldInput {
+    font-size: 18px;
+  }
+
+  .submit {
+    font-size: 18px;
+  }
+}

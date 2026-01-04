@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fitness Tracker
+
+A full-stack fitness tracking app built with Next.js, Prisma, and Auth0. Users can create workouts, add multiple exercises, and log sets, reps, and weights.
+
+## Table of Contents
+
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Getting Started](#getting-started)
+* [Environment Variables](#environment-variables)
+* [Database](#database)
+* [Scripts](#scripts)
+* [Folder Structure](#folder-structure)
+* [License](#license)
+
+## Features
+
+* User authentication via Auth0
+* CRUD operations for Workouts and Exercises
+* Multi-select searchable exercises using `react-select`
+* Logs sets, reps, and weight for each exercise
+* Counts exercises in each workout
+* Responsive and mobile-friendly UI
+
+## Tech Stack
+
+* Frontend: Next.js 13, React
+* Styling: CSS modules
+* Backend: Next.js API routes, Prisma ORM
+* Database: PostgreSQL
+* Authentication: Auth0
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+
+```bash
+git clone <repo-url>
+cd fitness-tracker
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables (see below)
+4. Set up the database (see "Database" section)
+5. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file in the root:
 
-## Learn More
+```
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=public"
+AUTH0_SECRET="your_auth0_secret"
+AUTH0_BASE_URL="http://localhost:3000"
+AUTH0_ISSUER_BASE_URL="https://YOUR_DOMAIN"
+AUTH0_CLIENT_ID="YOUR_CLIENT_ID"
+AUTH0_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project uses Prisma ORM with PostgreSQL.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Run migrations to create tables:
 
-## Deploy on Vercel
+```bash
+npx prisma migrate dev --name init
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Generate Prisma client:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx prisma generate
+```
+
+3. Seed data (optional):
+
+```bash
+npx prisma db seed
+```
+
+## Scripts
+
+* `npm run dev` – run dev server
+* `npm run build` – build for production
+* `npm run start` – run production build
+* `npx prisma migrate dev` – run migrations
+* `npx prisma studio` – open Prisma Studio
+
+## Folder Structure
+
+* /app – Next.js app directory
+* /components – React components
+* /prisma – Prisma schema and migrations
+* /styles – CSS modules and global styles
+* /lib – Auth0 and helper functions
+
+## License
+
+MIT

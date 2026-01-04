@@ -1,0 +1,84 @@
+.logItem {
+  margin-bottom: 12px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: left;
+  list-style-type: none;
+  color: #19160f;
+}
+
+.logItem:last-of-type {
+  margin-bottom: 20px;
+}
+
+.heading {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 20px 20px 20px;
+}
+
+.logItemName {
+  font-size: 20px;
+  padding-right: 20px;
+}
+
+.logItemDate {
+  font-size: 16px;    
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logItemStat {
+  margin-top: 5px;
+}
+
+.logItemStats {
+  padding: 0 20px 20px 20px;
+}
+
+.logItemYellow {
+  background-color: #f6d868;
+}
+
+.logItemPink {
+  background-color: #f5b8da;
+}
+
+.logItemGreen {
+  background-color: #9da862;
+}
+
+.logItemBlue {
+  background-color: #b6caeb;
+}
+
+@media (min-width: 460px) {
+  .heading {
+    padding: 30px 30px 20px 30px;
+  }
+
+  .logItemName {
+    font-size: 22px;
+  }
+
+  .logItemStats {
+    padding: 0 30px 30px 30px;
+  }
+
+  .buttonWrapper {
+    padding: 0 30px 30px 30px;
+  }
+}
