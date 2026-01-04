@@ -23,10 +23,6 @@
   background-color: #b6caeb;
 }
 
-.srOnly {
-  display: none;
-}
-
 .userContainer {
   display: flex;
   flex-flow: row nowrap;

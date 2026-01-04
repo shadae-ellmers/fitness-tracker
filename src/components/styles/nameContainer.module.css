@@ -10,8 +10,17 @@
   background-color: #b6caeb;
   color: #19160f;
   fill: #19160f;
-  border: 0;
+  border: 2px solid #b6caeb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.pencilIcon:hover,
+.pencilIcon:focus {
+  border-color: #19160f;
+  background-color: #19160f;
+  color: #faf4e4;
+  fill: #faf4e4;
 }
 
 .exerciseName {
@@ -29,8 +38,6 @@
 }
 
 .form {
-  display: flex;
-  flex-direction: row;
   display: flex;
   flex-direction: column;
 }
@@ -66,11 +73,11 @@
   align-items: center;
   color: #19160f;
   fill: #19160f;
-  border: 0;
+  border: 2px solid #9da862;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-top: auto;
   margin-bottom: auto;
-  
+  cursor: pointer;
 }
 
 .checkIcon {
@@ -80,6 +87,15 @@
 
 .closeIcon {
   background-color: #f5b8da;
+  border-color: #f5b8da;
+}
+
+.checkIcon:hover,
+.checkIcon:focus,
+.closeIcon:hover,
+.closeIcon:focus {
+  background-color: #b6caeb;
+  border-color: #b6caeb;
 }
 
 @media (min-width: 460px) {

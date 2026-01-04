@@ -26,7 +26,7 @@ export default async function RootLayout({
       <body>
         <Auth0Provider>
           <Header />
-          {children}
+          <main>{children}</main>
         </Auth0Provider>
       </body>
     </html>

@@ -42,11 +42,20 @@
   border-radius: 30px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   text-align: center;
-  border: 0;
+  border: 2px solid #19160f;
   font-size: 16px;
   margin-bottom: 20px;
   font-weight: 600;
   margin-top: 12px;
+  cursor: pointer;
+  max-width: 200px;
+}
+
+.submit:hover,
+.submit:focus {
+  background-color: #b6caeb;
+  border-color: #b6caeb;
+  color: #19160f;
 }
 
 @media (min-width: 460px) {

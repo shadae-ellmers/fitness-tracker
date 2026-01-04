@@ -12,6 +12,11 @@
   padding-right: 12px;
 }
 
+.backLink:hover .backText,
+.backLink:focus .backText {
+  text-decoration: underline;
+}
+
 .backIcon {
   fill: #19160f;
   display: flex;

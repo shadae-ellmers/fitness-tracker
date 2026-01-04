@@ -47,8 +47,18 @@
   background-color: #19160f;
   align-items: center;
   color: #faf4e4;
-  border: 0;
+  border: 2px solid #19160f;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.navIcon:hover,
+.navIcon:focus,
+.closeIcon:hover,
+.closeIcon:focus {
+  background-color: #b6caeb;
+  color: #19160f;
+  border-color: #b6caeb;
 }
 
 .links {
@@ -67,6 +77,7 @@
   margin-bottom: 12px;
   overflow: hidden;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  border: 0;
 }
 
 .linkItem {
@@ -76,4 +87,13 @@
   padding: 15px 20px;
   font-size: 18px;
   font-weight: 600;
+  border: 2px solid #19160f;
+  border-radius: 30px;
+}
+
+.linkItem:hover,
+.linkItem:focus {
+  color: #19160f;
+  background-color: #b6caeb;
+  border-color: #b6caeb;
 }

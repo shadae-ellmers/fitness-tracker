@@ -6,6 +6,7 @@ import PlusIcon from './Icons/PlusIcon'
 import CheckIcon from './Icons/CheckIcon'
 import styles from './styles/workoutToolbar.module.css'
 import { updateWorkoutExercises } from '@/app/actions/update'
+import CloseIcon from './Icons/CloseIcon'
 
 interface Exercise {
   id: number
@@ -45,6 +46,11 @@ export default function WorkoutToolbar({
       setSelectedExercises([])
       setIsSaving(false)
     }
+  }
+
+  const handleCancel = () => {
+    setDisplayForm(false)
+    setSelectedExercises([])
   }
 
   const uniqueId = Math.random().toString()
@@ -121,6 +127,14 @@ export default function WorkoutToolbar({
               aria-label="Save"
             >
               <CheckIcon />
+            </button>
+            <button
+              type="button"
+              className={styles.closeIcon}
+              aria-label="Cancel"
+              onClick={handleCancel}
+            >
+              <CloseIcon />
             </button>
           </div>
         </form>

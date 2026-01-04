@@ -1,16 +1,29 @@
 'use client'
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import {
   Chart as ChartJS,
   LineElement,
   CategoryScale,
   LinearScale,
   PointElement,
+  Tooltip,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import styles from '../styles/charts.module.css'
+import chartjs2music from 'chartjs-plugin-chart2music'
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement)
+import type { TooltipItem } from 'chart.js'
+
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  chartjs2music
+)
 
 interface Props {
   data: { date: string; volume: number; percentChange: number }[]
@@ -46,6 +59,23 @@ export default function ProgressChart({ data, dateRange = null }: Props) {
 
   const options = {
     responsive: true,
+    plugins: {
+      tooltip: {
+        displayColors: false,
+        enabled: true,
+        callbacks: {
+          title: (tooltipItems: TooltipItem<'line'>[]) => {
+            const rawDate = tooltipItems[0].label
+            return formatDate(rawDate)
+          },
+          label: (item: TooltipItem<'line'>) => {
+            const y = item.parsed.y
+            if (y === null) return ''
+            return `Volume: ${String(y)}`
+          },
+        },
+      },
+    },
     scales: {
       x: {
         border: {
@@ -99,6 +129,24 @@ export default function ProgressChart({ data, dateRange = null }: Props) {
     },
   }
 
+  const formatDate = (isoDate: string) => {
+    return new Date(isoDate).toLocaleDateString('en-NZ', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
+  }
+
+  const getAriaLabel = (): string => {
+    if (dateRange === 'month') {
+      return 'Line chart displaying change in volume over the last 30 days'
+    } else {
+      return 'Line chart displaying change in volume across all time'
+    }
+  }
+
+  const tableId = `progress-${dateRange}-chart-table`
+
   return (
     <div>
       {dateRange === 'month' && (
@@ -113,7 +161,31 @@ export default function ProgressChart({ data, dateRange = null }: Props) {
           overall.
         </p>
       )}
-      <Line data={chartData} options={options} />
+      <Line
+        data={chartData}
+        options={options}
+        aria-label={getAriaLabel()}
+        tabIndex={0}
+        role="img"
+        aria-describedby={tableId}
+      />
+      <table id={tableId} className={styles.srOnly}>
+        <caption>Volume over time</caption>
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Volume</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((d) => (
+            <tr key={formatDate(d.date)}>
+              <td>{formatDate(d.date)}</td>
+              <td>{d.volume}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

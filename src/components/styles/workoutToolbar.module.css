@@ -10,9 +10,18 @@
   background-color: #b6caeb;
   color: #19160f;
   fill: #19160f;
-  border: 0;
+  border: 2px solid #b6caeb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-right: 12px;
+  cursor: pointer;
+}
+
+.plusIcon:hover,
+.plusIcon:focus {
+  background-color: #19160f;
+  color: #faf4e4;
+  fill: #faf4e4;
+  border-color: #19160f;
 }
 
 .toolbar {
@@ -28,20 +37,21 @@
 
 .form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .select {
   margin-right: 12px;
+  margin-bottom: 12px;
 }
 
 .buttonWrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
 }
 
-.checkIcon {
+.checkIcon,
+.closeIcon {
   border-radius: 100%;
   overflow: hidden;
   width: 50px;
@@ -50,9 +60,41 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #9da862;
   color: #19160f;
   fill: #19160f;
-  border: 0;
+  border: 2px solid #9da862;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-top: auto;
+  margin-bottom: auto;
+  cursor: pointer;
+}
+
+.checkIcon {
+  background-color: #9da862;
+  margin-right: 12px;
+}
+
+.closeIcon {
+  background-color: #f5b8da;
+  border-color: #f5b8da;
+}
+
+.checkIcon:hover,
+.checkIcon:focus,
+.closeIcon:hover,
+.closeIcon:focus {
+  background-color: #b6caeb;
+  border-color: #b6caeb;
+}
+
+@media (min-width: 460px) {
+  .form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .select {
+    margin-bottom: unset;
+  }
 }
