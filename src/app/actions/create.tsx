@@ -31,7 +31,7 @@ export async function addLog(input: AddLogInput) {
       weight: input.weight,
       reps: input.reps,
       sets: input.sets,
-      date: new Date(input.date ?? ''),
+      date: input.date,
     },
     include: {
       exercise: true,
