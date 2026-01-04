@@ -25,8 +25,10 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Auth0Provider>
-          <Header />
-          <main>{children}</main>
+          <main>
+            <Header />
+            {children}
+          </main>
         </Auth0Provider>
       </body>
     </html>
