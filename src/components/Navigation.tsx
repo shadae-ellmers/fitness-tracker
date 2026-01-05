@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import HamburgerIcon from './Icons/HamburgerIcon'
 import styles from './styles/navigation.module.css'
 import CloseIcon from './Icons/CloseIcon'
@@ -8,6 +8,17 @@ import Link from 'next/link'
 
 export default function Navigation() {
   const [navDisplay, setNavDisplay] = useState(false)
+
+  const openButtonRef = useRef<HTMLButtonElement | null>(null)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    if (navDisplay) {
+      closeButtonRef.current?.focus()
+    } else {
+      openButtonRef.current?.focus()
+    }
+  }, [navDisplay])
 
   const toggleNav = () => {
     setNavDisplay(!navDisplay)
@@ -22,10 +33,14 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`${styles.nav} ${!navDisplay ? styles.closed : ''}`}>
+      <nav
+        className={`${styles.nav} ${!navDisplay ? styles.closed : ''}`}
+        aria-hidden={!navDisplay}
+      >
         <div className={styles.navContent}>
           <div className={styles.navButtons}>
             <button
+              ref={closeButtonRef}
               className={styles.closeIcon}
               onClick={toggleNav}
               aria-label="Close navigation menu"
@@ -54,6 +69,7 @@ export default function Navigation() {
 
       {!navDisplay && (
         <button
+          ref={openButtonRef}
           className={styles.navIcon}
           onClick={toggleNav}
           aria-label="Open navigation menu"

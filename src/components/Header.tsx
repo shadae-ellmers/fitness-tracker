@@ -23,8 +23,11 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.userContainer}>
-        <div className={styles.profilePhotoContainer}>
-          {user?.picture ? (
+        <div
+          className={styles.profilePhotoContainer}
+          aria-hidden={user?.picture ? false : true}
+        >
+          {user?.picture && (
             <img
               src={user.picture}
               alt={
@@ -33,8 +36,6 @@ export default function Header() {
                   : 'Profile picture'
               }
             />
-          ) : (
-            <div className={styles.profilePhotoEmpty} aria-hidden="true"></div>
           )}
         </div>
         <div className={styles.userGreeting}>
